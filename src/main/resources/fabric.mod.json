@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "magic-things",
+  "version": "development",
+  "name": "Magic Things",
+  "description": "",
+  "authors": [
+    "harleylizard"
+  ],
+  "contact": {
+    "homepage": "github.com/harleylizard/magic-things",
+    "sources": "github.com/harleylizard/magic-things"
+  },
+  "license": "All Rights Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.harleylizard.magic_things.common.MagicThings"
+    ],
+    "client": [
+      "com.harleylizard.magic_things.client.MagicThingsClient"
+    ]
+  },
+  "mixins": [
+    "magic-things.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  },
+  "custom": {
+  }
+}
