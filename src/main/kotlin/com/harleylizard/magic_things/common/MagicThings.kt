@@ -24,8 +24,10 @@ class MagicThings : ModInitializer, TerraBlenderApi {
 
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, "creative_tab".resourceLocation, FabricItemGroup.builder().icon(Items.DIRT::getDefaultInstance).displayItems { itemDisplayParameters, output ->
             output.accept(MagicThingsBlocks.fouledLog)
+            output.accept(MagicThingsBlocks.fouledWood)
             output.accept(MagicThingsBlocks.fouledLogRoots)
             output.accept(MagicThingsBlocks.fouledSapling)
+            output.accept(MagicThingsBlocks.fouledGrowth)
             output.accept(MagicThingsBlocks.wiltingGrass)
 
         }.title(Component.translatable("magic-things")).build())

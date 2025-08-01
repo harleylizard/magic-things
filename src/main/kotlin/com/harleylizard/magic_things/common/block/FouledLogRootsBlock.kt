@@ -1,6 +1,7 @@
 package com.harleylizard.magic_things.common.block
 
 import com.harleylizard.magic_things.common.MagicThingsBlocks
+import com.harleylizard.magic_things.common.Util
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.item.context.BlockPlaceContext
@@ -29,7 +30,7 @@ class FouledLogRootsBlock(properties: Properties) : Block(properties) {
     override fun canSurvive(blockState: BlockState, levelReader: LevelReader, blockPos: BlockPos): Boolean {
         for (direction in Direction.Plane.HORIZONTAL) {
             if (nextToLog(levelReader, blockPos, direction)) {
-                return isTopSolid(levelReader, blockPos.below())
+                return Util.solid(levelReader, blockPos.below(), Direction.UP)
             }
         }
 
@@ -46,8 +47,6 @@ class FouledLogRootsBlock(properties: Properties) : Block(properties) {
             it
         }
     }
-
-    fun isTopSolid(level: LevelReader, blockPos: BlockPos) = level.getBlockState(blockPos).let { it.isFaceSturdy(level, blockPos, Direction.UP) && !it.propagatesSkylightDown(level, blockPos) }
 
     fun nextToLog(level: LevelReader, blockPos: BlockPos, direction: Direction) = level.getBlockState(blockPos.relative(direction)).`is`(MagicThingsBlocks.fouledLog)
 

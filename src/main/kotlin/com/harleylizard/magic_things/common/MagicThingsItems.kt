@@ -11,14 +11,18 @@ object MagicThingsItems {
     val Block.blockItem get() = BlockItem(this, Item.Properties())
 
     val fouledLog = MagicThingsBlocks.fouledLog.blockItem
+    val fouledWood = MagicThingsBlocks.fouledWood.blockItem
     val fouledLogRoots = MagicThingsBlocks.fouledLogRoots.blockItem
     val fouledSapling = MagicThingsBlocks.fouledSapling.blockItem
+    val fouledGrowth = MagicThingsBlocks.fouledGrowth.blockItem
     val wiltingGrass = MagicThingsBlocks.wiltingGrass.blockItem
 
     fun register() {
         register("fouled_log", fouledLog)
+        register("fouled_wood", fouledWood)
         register("fouled_log_roots", fouledLogRoots)
         register("fouled_sapling", fouledSapling)
+        register("fouled_growth", fouledGrowth)
         register("wilting_grass", wiltingGrass)
 
     }

@@ -1,7 +1,9 @@
 {
   "values": [
     "magic-things:fouled_log",
+    "magic-things:fouled_wood",
     "magic-things:fouled_log_roots",
-    "magic-things:fouled_sapling"
+    "magic-things:fouled_sapling",
+    "magic-things:fouled_growth"
   ]
 }

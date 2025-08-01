@@ -5,8 +5,10 @@ import com.harleylizard.magic_things.common.payload.SendBiomesPayload
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.chunk.status.ChunkStatus
 
@@ -31,4 +33,9 @@ object Util {
         }
 
     }
+
+    fun solid(level: LevelReader, blockPos: BlockPos, direction: Direction) = level.getBlockState(blockPos).let {
+        it.isFaceSturdy(level, blockPos, direction) && !it.propagatesSkylightDown(level, blockPos)
+    }
+
 }
