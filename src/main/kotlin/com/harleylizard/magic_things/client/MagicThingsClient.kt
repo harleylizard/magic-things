@@ -8,7 +8,7 @@ import net.minecraft.world.level.chunk.status.ChunkStatus
 
 class MagicThingsClient : ClientModInitializer {
     override fun onInitializeClient() {
-        ClientPlayNetworking.registerReceiver(SendBiomesPayload.TYPE) { payload, context ->
+        ClientPlayNetworking.registerGlobalReceiver(SendBiomesPayload.TYPE) { payload, context ->
             context.client()?.let {
                 it.execute {
                     val x = payload.x.shr(4)

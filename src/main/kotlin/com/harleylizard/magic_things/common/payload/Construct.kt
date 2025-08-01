@@ -29,7 +29,7 @@ class Construct(private val map: Int2IntMap) {
             val size = readInt()
             val map: Int2IntMap = Int2IntArrayMap(size)
 
-            for (i in 0..size) {
+            for (i in 0 until size) {
                 map.put(
                     readInt(),
                     readInt())
@@ -44,7 +44,7 @@ class Construct(private val map: Int2IntMap) {
             val map: Int2IntMap = Int2IntArrayMap(size)
 
             val registry = registry
-            for (i in 0..palette.size) {
+            for (i in 0 until palette.size) {
                 map.put(i, registry.getId(palette.valueFor(i)))
             }
 
