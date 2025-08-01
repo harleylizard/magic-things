@@ -22,13 +22,12 @@
     "water_fog_color": 10307258
   },
   "features": [
-    [],
     [
       "minecraft:glow_lichen",
       "minecraft:patch_grass_plain"
     ],
     [
-      "minecraft:oak"
+      "magic-things:fouled_tree"
     ]
   ],
   "has_precipitation": true,

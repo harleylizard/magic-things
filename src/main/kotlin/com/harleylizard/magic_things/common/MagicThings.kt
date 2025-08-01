@@ -1,5 +1,6 @@
 package com.harleylizard.magic_things.common
 
+import com.harleylizard.magic_things.common.MagicThingsFeatures
 import com.harleylizard.magic_things.common.terrablender.MagicThingsRegion
 import com.harleylizard.magic_things.common.terrablender.MagicThingsSurfaceRules
 import net.fabricmc.api.ModInitializer
@@ -18,6 +19,7 @@ class MagicThings : ModInitializer, TerraBlenderApi {
     override fun onInitialize() {
         MagicThingsBlocks.register()
         MagicThingsItems.register()
+        MagicThingsFeatures.register()
 
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, "creative_tab".resourceLocation, FabricItemGroup.builder().icon(Items.DIRT::getDefaultInstance).displayItems { itemDisplayParameters, output ->
             output.accept(MagicThingsBlocks.FOULED_LOG)
