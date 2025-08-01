@@ -1,14 +1,23 @@
 package com.harleylizard.magic_things.client
 
 import com.harleylizard.magic_things.common.BiomeSetter
+import com.harleylizard.magic_things.common.MagicThingsBlocks
+import com.harleylizard.magic_things.common.MagicThingsItems
 import com.harleylizard.magic_things.common.payload.SendBiomesPayload
 import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
+import net.minecraft.client.color.block.BlockColor
+import net.minecraft.client.color.item.ItemColor
+import net.minecraft.client.renderer.BiomeColors
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.world.level.GrassColor
 import net.minecraft.world.level.chunk.status.ChunkStatus
 
 class MagicThingsClient : ClientModInitializer {
     override fun onInitializeClient() {
-        ClientPlayNetworking.registerGlobalReceiver(SendBiomesPayload.TYPE) { payload, context ->
+        ClientPlayNetworking.registerGlobalReceiver(SendBiomesPayload.type) { payload, context ->
             context.client()?.let {
                 it.execute {
                     val x = payload.x.shr(4)
@@ -24,8 +33,12 @@ class MagicThingsClient : ClientModInitializer {
                     }
                 }
             }
-
         }
+
+        ColorProviderRegistry.BLOCK.register(BlockColor { blockState, blockAndTintGetter, blockPos, i -> BiomeColors.getAverageGrassColor(blockAndTintGetter, blockPos) }, MagicThingsBlocks.wiltingGrass)
+        ColorProviderRegistry.ITEM.register(ItemColor { itemStack, i -> GrassColor.getDefaultColor() }, MagicThingsItems.wiltingGrass)
+
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), MagicThingsBlocks.fouledSapling, MagicThingsBlocks.wiltingGrass)
 
     }
 

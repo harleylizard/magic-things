@@ -14,8 +14,8 @@ import java.util.function.Consumer
 class MagicThingsRegion(name: ResourceLocation) : Region(name, RegionType.OVERWORLD, 5) {
 
     override fun addBiomes(registry: Registry<Biome>, mapper: Consumer<Pair<Climate.ParameterPoint?, ResourceKey<Biome>>>) {
-        addBiome(mapper, ParameterUtils.Temperature.WARM.parameter(), ParameterUtils.Humidity.NEUTRAL.parameter(), ParameterUtils.Continentalness.INLAND.parameter(), ParameterUtils.Erosion.EROSION_3.parameter(), ParameterUtils.Weirdness.LOW_SLICE_VARIANT_ASCENDING.parameter(), ParameterUtils.Depth.SURFACE.parameter(), 0.0f, MagicThingsBiomes.FOULED_FOREST)
-        addBiome(mapper, ParameterUtils.Temperature.WARM.parameter(), ParameterUtils.Humidity.NEUTRAL.parameter(), ParameterUtils.Continentalness.INLAND.parameter(), ParameterUtils.Erosion.EROSION_3.parameter(), ParameterUtils.Weirdness.LOW_SLICE_VARIANT_ASCENDING.parameter(), ParameterUtils.Depth.SURFACE.parameter(), 0.0f, MagicThingsBiomes.FOULED_PLAINS)
+        addBiome(mapper, ParameterUtils.Temperature.WARM.parameter(), ParameterUtils.Humidity.NEUTRAL.parameter(), ParameterUtils.Continentalness.INLAND.parameter(), ParameterUtils.Erosion.EROSION_3.parameter(), ParameterUtils.Weirdness.LOW_SLICE_VARIANT_ASCENDING.parameter(), ParameterUtils.Depth.SURFACE.parameter(), 0.0f, MagicThingsBiomes.fouledForest)
+        addBiome(mapper, ParameterUtils.Temperature.WARM.parameter(), ParameterUtils.Humidity.NEUTRAL.parameter(), ParameterUtils.Continentalness.INLAND.parameter(), ParameterUtils.Erosion.EROSION_3.parameter(), ParameterUtils.Weirdness.LOW_SLICE_VARIANT_ASCENDING.parameter(), ParameterUtils.Depth.SURFACE.parameter(), 0.0f, MagicThingsBiomes.fouledPlains)
 
     }
 

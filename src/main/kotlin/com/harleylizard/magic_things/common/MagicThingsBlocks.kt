@@ -8,18 +8,21 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.TallGrassBlock
 import net.minecraft.world.level.block.grower.TreeGrower
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 
 object MagicThingsBlocks {
-    val FOULED_LOG = RotatedPillarBlock(Properties.of())
-    val FOULED_LOG_ROOTS = FouledLogRootsBlock(Properties.of().noOcclusion())
-    val FOULED_SAPLING = FouledSaplingBlock(TreeGrower.OAK, Properties.ofFullCopy(Blocks.OAK_SAPLING))
+    val fouledLog = RotatedPillarBlock(Properties.of())
+    val fouledLogRoots = FouledLogRootsBlock(Properties.of().noOcclusion())
+    val fouledSapling = FouledSaplingBlock(TreeGrower.OAK, Properties.ofFullCopy(Blocks.OAK_SAPLING))
+    val wiltingGrass = TallGrassBlock(Properties.ofFullCopy(Blocks.SHORT_GRASS))
 
     fun register() {
-        register("fouled_log", FOULED_LOG)
-        register("fouled_log_roots", FOULED_LOG_ROOTS)
-        register("fouled_sapling", FOULED_SAPLING)
+        register("fouled_log", fouledLog)
+        register("fouled_log_roots", fouledLogRoots)
+        register("fouled_sapling", fouledSapling)
+        register("wilting_grass", wiltingGrass)
 
     }
 

@@ -49,6 +49,6 @@ class FouledLogRootsBlock(properties: Properties) : Block(properties) {
 
     fun isTopSolid(level: LevelReader, blockPos: BlockPos) = level.getBlockState(blockPos).let { it.isFaceSturdy(level, blockPos, Direction.UP) && !it.propagatesSkylightDown(level, blockPos) }
 
-    fun nextToLog(level: LevelReader, blockPos: BlockPos, direction: Direction) = level.getBlockState(blockPos.relative(direction)).`is`(MagicThingsBlocks.FOULED_LOG)
+    fun nextToLog(level: LevelReader, blockPos: BlockPos, direction: Direction) = level.getBlockState(blockPos.relative(direction)).`is`(MagicThingsBlocks.fouledLog)
 
 }

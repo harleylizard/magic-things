@@ -10,14 +10,16 @@ import net.minecraft.world.level.block.Block
 object MagicThingsItems {
     val Block.blockItem get() = BlockItem(this, Item.Properties())
 
-    val FOULED_LOG = MagicThingsBlocks.FOULED_LOG.blockItem
-    val FOULED_LOG_ROOTS = MagicThingsBlocks.FOULED_LOG_ROOTS.blockItem
-    val FOULED_SAPLING = MagicThingsBlocks.FOULED_SAPLING.blockItem
+    val fouledLog = MagicThingsBlocks.fouledLog.blockItem
+    val fouledLogRoots = MagicThingsBlocks.fouledLogRoots.blockItem
+    val fouledSapling = MagicThingsBlocks.fouledSapling.blockItem
+    val wiltingGrass = MagicThingsBlocks.wiltingGrass.blockItem
 
     fun register() {
-        register("fouled_log", FOULED_LOG)
-        register("fouled_log_roots", FOULED_LOG_ROOTS)
-        register("fouled_sapling", FOULED_SAPLING)
+        register("fouled_log", fouledLog)
+        register("fouled_log_roots", fouledLogRoots)
+        register("fouled_sapling", fouledSapling)
+        register("wilting_grass", wiltingGrass)
 
     }
 

@@ -39,7 +39,7 @@ class FouledTreeFeature() : Feature<NoneFeatureConfiguration>(NoneFeatureConfigu
             val lowest = relative.above()
 
             if (level.getBlockState(lowest).let { it.fluidState.isEmpty && replaceable(it) }) {
-                val root = MagicThingsBlocks.FOULED_LOG_ROOTS.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, direction.opposite)
+                val root = MagicThingsBlocks.fouledLogRoots.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, direction.opposite)
 
                 level.setBlock(lowest, root, Block.UPDATE_ALL)
 
@@ -51,7 +51,7 @@ class FouledTreeFeature() : Feature<NoneFeatureConfiguration>(NoneFeatureConfigu
             val relative =  BlockPos(blockPos.x, i, blockPos.z)
 
             level.getBlockState(relative).takeIf { replaceable(it) || it.`is`(BlockTags.DIRT) }?.let {
-                level.setBlock(relative, MagicThingsBlocks.FOULED_LOG.defaultBlockState(), Block.UPDATE_ALL)
+                level.setBlock(relative, MagicThingsBlocks.fouledLog.defaultBlockState(), Block.UPDATE_ALL)
             }
 
         }
@@ -59,6 +59,6 @@ class FouledTreeFeature() : Feature<NoneFeatureConfiguration>(NoneFeatureConfigu
         return true
     }
 
-    fun replaceable(blockState: BlockState) = blockState.`is`(BlockTags.REPLACEABLE_BY_TREES) || blockState.`is`(BlockTags.REPLACEABLE)
+    fun replaceable(blockState: BlockState) = blockState.`is`(BlockTags.REPLACEABLE_BY_TREES) || blockState.`is`(BlockTags.REPLACEABLE) || blockState.`is`(BlockTags.LUSH_GROUND_REPLACEABLE)
 
 }

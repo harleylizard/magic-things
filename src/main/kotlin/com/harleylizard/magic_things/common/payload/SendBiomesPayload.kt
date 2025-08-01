@@ -10,11 +10,11 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 data class SendBiomesPayload(val construct: Construct, val x: Int, val y: Int, val z: Int) : CustomPacketPayload {
 
     override fun type(): CustomPacketPayload.Type<out CustomPacketPayload?>? {
-        return TYPE
+        return type
     }
 
     companion object {
-        val CODEC = object : StreamCodec<FriendlyByteBuf, SendBiomesPayload> {
+        val codec = object : StreamCodec<FriendlyByteBuf, SendBiomesPayload> {
             override fun decode(buf: FriendlyByteBuf) = SendBiomesPayload(buf.construct,
                 buf.readInt(),
                 buf.readInt(),
@@ -29,9 +29,9 @@ data class SendBiomesPayload(val construct: Construct, val x: Int, val y: Int, v
 
         }
 
-        val SEND_BIOMES = "send_biomes".resourceLocation
+        val sendBiomes = "send_biomes".resourceLocation
 
-        val TYPE = CustomPacketPayload.Type<SendBiomesPayload>(SEND_BIOMES)
+        val type = CustomPacketPayload.Type<SendBiomesPayload>(sendBiomes)
 
     }
 

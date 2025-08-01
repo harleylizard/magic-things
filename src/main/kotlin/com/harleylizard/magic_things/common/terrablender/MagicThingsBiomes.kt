@@ -6,8 +6,8 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.biome.Biome
 
 object MagicThingsBiomes {
-    val FOULED_FOREST = "fouled_forest".resourceKey
-    val FOULED_PLAINS = "fouled_plains".resourceKey
+    val fouledForest = "fouled_forest".resourceKey
+    val fouledPlains = "fouled_plains".resourceKey
 
     val String.resourceKey: ResourceKey<Biome> get() = ResourceKey.create(Registries.BIOME, resourceLocation)
 

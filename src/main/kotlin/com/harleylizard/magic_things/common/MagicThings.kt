@@ -23,13 +23,14 @@ class MagicThings : ModInitializer, TerraBlenderApi {
         MagicThingsFeatures.register()
 
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, "creative_tab".resourceLocation, FabricItemGroup.builder().icon(Items.DIRT::getDefaultInstance).displayItems { itemDisplayParameters, output ->
-            output.accept(MagicThingsBlocks.FOULED_LOG)
-            output.accept(MagicThingsBlocks.FOULED_LOG_ROOTS)
-            output.accept(MagicThingsBlocks.FOULED_SAPLING)
+            output.accept(MagicThingsBlocks.fouledLog)
+            output.accept(MagicThingsBlocks.fouledLogRoots)
+            output.accept(MagicThingsBlocks.fouledSapling)
+            output.accept(MagicThingsBlocks.wiltingGrass)
 
         }.title(Component.translatable("magic-things")).build())
 
-        PayloadTypeRegistry.playS2C().register(SendBiomesPayload.TYPE, SendBiomesPayload.CODEC)
+        PayloadTypeRegistry.playS2C().register(SendBiomesPayload.type, SendBiomesPayload.codec)
 
     }
 

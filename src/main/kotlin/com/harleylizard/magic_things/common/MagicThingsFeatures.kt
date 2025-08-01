@@ -7,10 +7,10 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.levelgen.feature.Feature
 
 object MagicThingsFeatures {
-    val FOULED_TREE = FouledTreeFeature()
+    val fouledTree = FouledTreeFeature()
 
     fun register() {
-        register("fouled_tree", FOULED_TREE)
+        register("fouled_tree", fouledTree)
     }
 
     fun register(name: String, feature: Feature<*>) {
