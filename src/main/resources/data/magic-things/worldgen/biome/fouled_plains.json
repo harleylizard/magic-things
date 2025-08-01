@@ -24,7 +24,7 @@
   "features": [
     [
       "minecraft:glow_lichen",
-      "magic-things:patch_wilting_grass"
+      "magic-things:fouled_growth_patch"
     ],
     [
       "magic-things:fouled_tree"

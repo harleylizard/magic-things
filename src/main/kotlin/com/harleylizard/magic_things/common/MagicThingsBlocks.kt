@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 
 object MagicThingsBlocks {
     val fouledLog = RotatedPillarBlock(Properties.of())
-    val fouledWood = RotatedPillarBlock(Properties.of())
+    val fouledWood = RotatedPillarBlock(Properties.ofFullCopy(fouledLog))
     val fouledLogRoots = FouledLogRootsBlock(Properties.of().noOcclusion())
     val fouledSapling = FouledSaplingBlock(TreeGrower.OAK, Properties.ofFullCopy(Blocks.OAK_SAPLING))
     val fouledGrowth = FouledGrowthBlock(Properties.of().noCollission().noOcclusion())

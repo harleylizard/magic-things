@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 
 class FouledGrowthBlock(properties: Properties) : Block(properties) {
@@ -29,7 +30,7 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
         for (direction in Direction.Plane.HORIZONTAL) {
         }
 
-        return if (i == 0) Blocks.AIR.defaultBlockState() else reverse(i)
+        return blockState //if (i == 0) Blocks.AIR.defaultBlockState() else reverse(i)
     }
 
     override fun getStateForPlacement(blockPlaceContext: BlockPlaceContext): BlockState {
@@ -38,8 +39,8 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
 
     fun fromBlockState(blockState: BlockState): Int {
         var i = 0
-        i = i or ((if (blockState.getValue(BlockStateProperties.UP)) 1 else 0) shl 0)
-        i = i or ((if (blockState.getValue(BlockStateProperties.DOWN)) 1 else 0) shl 1)
+        i = i or (has(blockState, BlockStateProperties.UP) shl 0)
+        i = i or (has(blockState, BlockStateProperties.DOWN) shl 1)
 
         val j = blockState.getValue(sides)
 
@@ -59,6 +60,8 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
 
         return result
     }
+
+    fun has(blockState: BlockState, face: BooleanProperty) = if (blockState.getValue(face)) 1 else 0
 
     companion object {
         val sides: IntegerProperty = IntegerProperty.create("sides", 0, 255)

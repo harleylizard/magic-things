@@ -18,7 +18,16 @@
                 "data": {
                   "Name": "magic-things:wilting_grass"
                 },
-                "weight": 2
+                "weight": 4
+              },
+              {
+                "data": {
+                  "Name": "magic-things:fouled_growth",
+                  "Properties": {
+                    "down": "true"
+                  }
+                },
+                "weight": 1
               }
             ]
           }

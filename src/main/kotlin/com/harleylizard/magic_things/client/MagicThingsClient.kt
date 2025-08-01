@@ -35,10 +35,13 @@ class MagicThingsClient : ClientModInitializer {
             }
         }
 
-        ColorProviderRegistry.BLOCK.register(BlockColor { blockState, blockAndTintGetter, blockPos, i -> BiomeColors.getAverageGrassColor(blockAndTintGetter, blockPos) }, MagicThingsBlocks.wiltingGrass)
-        ColorProviderRegistry.ITEM.register(ItemColor { itemStack, i -> GrassColor.getDefaultColor() }, MagicThingsItems.wiltingGrass)
+        ColorProviderRegistry.BLOCK.register(BlockColor { blockState, blockAndTintGetter, blockPos, i -> BiomeColors.getAverageGrassColor(blockAndTintGetter, blockPos) }, MagicThingsBlocks.fouledGrowth, MagicThingsBlocks.wiltingGrass)
 
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), MagicThingsBlocks.fouledSapling, MagicThingsBlocks.wiltingGrass)
+        val item = ColorProviderRegistry.ITEM
+        item.register(ItemColor { itemStack, i -> GrassColor.getDefaultColor() }, MagicThingsItems.wiltingGrass)
+        item.register(ItemColor { itemStack, i -> 0x7D4FAD }, MagicThingsItems.fouledGrowth)
+
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), MagicThingsBlocks.fouledSapling, MagicThingsBlocks.fouledGrowth, MagicThingsBlocks.wiltingGrass)
 
     }
 

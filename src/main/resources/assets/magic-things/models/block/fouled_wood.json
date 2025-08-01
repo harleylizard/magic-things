@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "magic-things:block/fouled_log",
+    "side": "magic-things:block/fouled_log"
+  }
+}

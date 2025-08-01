@@ -1,0 +1,22 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "magic-things:block/fouled_growth_bottom",
+        "uvlock": true
+      },
+      "when": {
+        "down": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "magic-things:block/fouled_growth_top",
+        "uvlock": true
+      },
+      "when": {
+        "up": "true"
+      }
+    }
+  ]
+}
