@@ -3,7 +3,23 @@
   "placement": [
     {
       "type": "minecraft:count",
-      "count": 1
+      "count": {
+        "type": "minecraft:weighted_list",
+        "distribution": [
+          {
+            "data": 4,
+            "weight": 0
+          },
+          {
+            "data": 2,
+            "weight": 0
+          },
+          {
+            "data": 1,
+            "weight": 3
+          }
+        ]
+      }
     },
     {
       "type": "minecraft:in_square"
@@ -17,7 +33,7 @@
       "predicate": {
         "type": "minecraft:would_survive",
         "state": {
-          "Name": "minecraft:oak_sapling",
+          "Name": "magic-things:fouled_sapling",
           "Properties": {
             "stage": "0"
           }
@@ -27,6 +43,5 @@
     {
       "type": "minecraft:biome"
     }
-
   ]
 }

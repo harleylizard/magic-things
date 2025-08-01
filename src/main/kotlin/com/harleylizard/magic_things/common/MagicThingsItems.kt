@@ -12,10 +12,12 @@ object MagicThingsItems {
 
     val FOULED_LOG = MagicThingsBlocks.FOULED_LOG.blockItem
     val FOULED_LOG_ROOTS = MagicThingsBlocks.FOULED_LOG_ROOTS.blockItem
+    val FOULED_SAPLING = MagicThingsBlocks.FOULED_SAPLING.blockItem
 
     fun register() {
         register("fouled_log", FOULED_LOG)
         register("fouled_log_roots", FOULED_LOG_ROOTS)
+        register("fouled_sapling", FOULED_SAPLING)
 
     }
 

@@ -1,10 +1,11 @@
 package com.harleylizard.magic_things.common
 
-import com.harleylizard.magic_things.common.MagicThingsFeatures
+import com.harleylizard.magic_things.common.payload.SendBiomesPayload
 import com.harleylizard.magic_things.common.terrablender.MagicThingsRegion
 import com.harleylizard.magic_things.common.terrablender.MagicThingsSurfaceRules
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
@@ -24,8 +25,11 @@ class MagicThings : ModInitializer, TerraBlenderApi {
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, "creative_tab".resourceLocation, FabricItemGroup.builder().icon(Items.DIRT::getDefaultInstance).displayItems { itemDisplayParameters, output ->
             output.accept(MagicThingsBlocks.FOULED_LOG)
             output.accept(MagicThingsBlocks.FOULED_LOG_ROOTS)
+            output.accept(MagicThingsBlocks.FOULED_SAPLING)
 
         }.title(Component.translatable("magic-things")).build())
+
+        PayloadTypeRegistry.playS2C().register(SendBiomesPayload.TYPE, SendBiomesPayload.CODEC)
 
     }
 

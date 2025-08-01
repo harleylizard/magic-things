@@ -18,7 +18,7 @@ class FouledTreeFeature() : Feature<NoneFeatureConfiguration>(NoneFeatureConfigu
         val random = context.random()
         val blockPos = context.origin()
 
-        val height = 4 + random.nextInt(3)
+        val height = 4 + random.nextInt(4)
 
         val top = blockPos.above(height)
 

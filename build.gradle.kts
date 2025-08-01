@@ -6,6 +6,10 @@ plugins {
 group = "com.harleylizard"
 version = "1.0-SNAPSHOT"
 
+loom {
+    accessWidenerPath.set(file("src/main/resources/magic-things.accesswidener"))
+}
+
 repositories {
     mavenCentral()
     maven("https://cursemaven.com")
