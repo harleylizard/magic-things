@@ -69,7 +69,10 @@ public final class FouledTreeFeature extends Feature<NoneFeatureConfiguration> {
             }
 
             for (var i = 0; i < distance; i++) {
-                level.setBlock(top.below(i + 1), log, Block.UPDATE_ALL);
+                var below = top.below(i + 1);
+                level.setBlock(below, log, Block.UPDATE_ALL);
+
+                placeDirt(level, below.below());
             }
             return true;
         }

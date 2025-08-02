@@ -75,8 +75,17 @@ public final class FouledGrowthBlock extends ShapeBlock {
     public VoxelShape shapeFrom(BlockState blockState) {
         int i = blockState.getValue(Y_SIDE);
         var shape = Shapes.empty();
-        if ((i & 1) == 1) shape = Shapes.or(shape, Shapes.box(0.0d, 15.0d / 16.0d, 0.0d, 1.0d, 1.0d, 1.0d));
-        if (((i >> 1) & 1) == 1) shape = Shapes.or(shape, Shapes.box(0.0d, 0.0d, 0.0d, 1.0d, 1.0d / 16.0d, 1.0d));
+        if ((i & 1) == 1) {
+            shape = Shapes.or(shape, Shapes.box(0.0d, 15.0d / 16.0d, 0.0d, 1.0d, 1.0d, 1.0d));
+        }
+        if (((i >> 1) & 1) == 1) {
+            shape = Shapes.or(shape, Shapes.box(0.0d, 0.0d, 0.0d, 1.0d, 1.0d / 16.0d, 1.0d));
+        }
+
+        var j = blockState.getValue(XZ_SIDE);
+        for (var direction : Direction.Plane.HORIZONTAL) {
+
+        }
 
         return shape;
     }
@@ -89,36 +98,40 @@ public final class FouledGrowthBlock extends ShapeBlock {
         var i = 0;
 
         int j = blockState.getValue(Y_SIDE);
-        i |= ((j >> 0) & 1) << 2 * 0;
-        i |= ((j >> 1) & 1) << 2 * 1;
+        i |= j & 1;
+        i |= ((j >> 1) & 1) << 2;
 
         int k = blockState.getValue(XZ_SIDE);
-        i |= growthStage(k, 0) << 2 * 2;
-        i |= growthStage(k, 1) << 2 * 3;
-        i |= growthStage(k, 2) << 2 * 4;
-        i |= growthStage(k, 3) << 2 * 5;
+        i |= growthStage(k, 0) << offset(2);
+        i |= growthStage(k, 1) << offset(3);
+        i |= growthStage(k, 2) << offset(4);
+        i |= growthStage(k, 3) << offset(5);
 
         return i;
     }
 
     public static BlockState toBlockState(int i) {
         var j = 0;
-        j |= ((i >> 0) & 1);
+        j |= i & 1;
         j |= ((i >> 2) & 1) << 1;
 
         var blockState = MagicThingsBlocks.FOULED_GROWTH.defaultBlockState().setValue(Y_SIDE, j);
 
         var k = 0;
-        k |= growthStage(i, 2) << 2 * 0;
-        k |= growthStage(i, 3) << 2 * 1;
-        k |= growthStage(i, 4) << 2 * 2;
-        k |= growthStage(i, 5) << 2 * 3;
+        k |= growthStage(i, 2);
+        k |= growthStage(i, 3) << 2;
+        k |= growthStage(i, 4) << offset(2);
+        k |= growthStage(i, 5) << offset(3);
 
         return blockState.setValue(XZ_SIDE, k);
     }
 
     private static int growthStage(int i, int j) {
         return (i >> 2 * j) & 3;
+    }
+
+    private static int offset(int i) {
+        return 2 * i;
     }
 
 }

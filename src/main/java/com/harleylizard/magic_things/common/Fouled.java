@@ -2,6 +2,8 @@ package com.harleylizard.magic_things.common;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 public final class Fouled {
 
@@ -15,6 +17,22 @@ public final class Fouled {
         }
 
         return false;
+    }
+
+    public static BlockState convertLog(Level level, BlockPos blockPos) {
+        var blockState = level.getBlockState(blockPos);
+        if (blockState.is(MagicThingsBlockTags.CONVERTS_INTO_FOULED_LOG)) {
+            var log = MagicThingsBlocks.FOULED_LOG.defaultBlockState();
+
+            if (blockState.getBlock() instanceof RotatedPillarBlock) {
+                return log.setValue(RotatedPillarBlock.AXIS, blockState.getValue(RotatedPillarBlock.AXIS));
+            }
+
+            return log;
+        }
+
+        return blockState;
+
     }
 
 }
