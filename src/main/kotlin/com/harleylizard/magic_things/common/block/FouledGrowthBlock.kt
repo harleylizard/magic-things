@@ -28,8 +28,8 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
     override fun updateShape(blockState: BlockState, direction: Direction, blockState2: BlockState, levelAccessor: LevelAccessor, blockPos: BlockPos, blockPos2: BlockPos): BlockState? {
         var i = fromBlockState(blockState)
 
-        for (direction in Direction.Plane.HORIZONTAL) {
-            if (!canGrowOn(levelAccessor, blockPos.relative(direction), direction)) {
+        for (direction in Direction.entries) {
+            if (!canGrowOn(levelAccessor, blockPos, direction)) {
                 i = i and (1 shl direction.ordinal).inv()
             }
         }
