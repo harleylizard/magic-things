@@ -1,11 +1,13 @@
 package com.harleylizard.magic_things.common.block
 
+import com.harleylizard.magic_things.common.MagicThingsBlocks
 import com.harleylizard.magic_things.common.Util
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
@@ -15,8 +17,12 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 
 class FouledGrowthBlock(properties: Properties) : Block(properties) {
+    val shapes = mutableMapOf<BlockState, VoxelShape>()
 
     init {
         registerDefaultState(stateDefinition.any()
@@ -59,7 +65,29 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
         return fromBlockState(blockState) > 0 && super.isRandomlyTicking(blockState)
     }
 
-    override fun randomTick(blockState: BlockState, serverLevel: ServerLevel, blockPos: BlockPos, randomSource: RandomSource) {
+    override fun randomTick(blockState: BlockState, level: ServerLevel, blockPos: BlockPos, randomSource: RandomSource) {
+        if (Util.nearbyFouledBiome(level, blockPos)) {
+            for (direction in Direction.entries) {
+                Util.place(level, blockPos.relative(direction), blockState)
+            }
+        }
+    }
+
+    override fun getShape(blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos, collisionContext: CollisionContext): VoxelShape? {
+        return shapes.computeIfAbsent(blockState, this::shapeOf)
+    }
+
+    fun shapeOf(blockState: BlockState): VoxelShape {
+        var shape = Shapes.empty()
+        if (blockState.getValue(BlockStateProperties.DOWN)) {
+            shape = Shapes.or(shape, Shapes.box(0.0, 0.0, 0.0, 1.0, 1.0 / 16.0, 1.0))
+        }
+        if (blockState.getValue(BlockStateProperties.UP)) {
+            shape = Shapes.or(shape, Shapes.box(0.0, 15.0 / 16, 0.0, 1.0, 1.0, 1.0))
+        }
+
+        return shape
+
     }
 
     fun fromBlockState(level: LevelReader, blockPos: BlockPos, blockState: BlockState): Int {
@@ -73,32 +101,44 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
         return i
     }
 
-    fun fromBlockState(blockState: BlockState): Int {
-        var i = 0
-        i = i or (has(blockState, BlockStateProperties.UP) shl 0)
-        i = i or (has(blockState, BlockStateProperties.DOWN) shl 1)
-
-        val j = blockState.getValue(sides)
-
-        return i
-    }
-
-    fun reverse(i: Int): BlockState {
-        var result = defaultBlockState()
-
-        return result
-    }
-
-    fun offset(i: Int) = 2 * (i - 2)
-
-    fun has(blockState: BlockState, face: BooleanProperty) = has(blockState.getValue(face))
-
-    fun has(boolean: Boolean) = if (boolean) 1 else 0
-
     fun canGrowOn(level: LevelReader, blockPos: BlockPos, direction: Direction) = Util.solid(level, blockPos.relative(direction.opposite), direction)
+
+
 
     companion object {
         val sides: IntegerProperty = IntegerProperty.create("sides", 0, 256)
+
+        fun fromBlockState(blockState: BlockState): Int {
+            if (!blockState.`is`(MagicThingsBlocks.fouledGrowth)) {
+                return 0
+            }
+
+            var i = 0
+            i = i or (has(blockState, BlockStateProperties.UP) shl 0)
+            i = i or (has(blockState, BlockStateProperties.DOWN) shl 1)
+
+            val j = blockState.getValue(sides)
+
+            return i
+        }
+
+        fun reverse(i: Int): BlockState {
+            var result = MagicThingsBlocks.fouledGrowth.defaultBlockState()
+            result = result.setValue(BlockStateProperties.UP, ((i shr 0) and 1) > 0)
+            result = result.setValue(BlockStateProperties.DOWN, ((i shr 1) and 1) > 0)
+
+            return result
+        }
+
+        fun offset(i: Int) = 2 * (i - 2)
+
+        fun has(blockState: BlockState, face: BooleanProperty) = has(blockState.getValue(face))
+
+        fun has(boolean: Boolean) = if (boolean) 1 else 0
+
+        fun up(blockState: BlockState) = reverse(fromBlockState(blockState) or (1 shl 0))
+
+        fun down(blockState: BlockState) = reverse(fromBlockState(blockState) or (1 shl 1))
 
     }
 }

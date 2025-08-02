@@ -1,5 +1,6 @@
 package com.harleylizard.magic_things.common
 
+import com.harleylizard.magic_things.common.block.FouledGrowthBlock
 import com.harleylizard.magic_things.common.payload.Construct.Companion.construct
 import com.harleylizard.magic_things.common.payload.SendBiomesPayload
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
@@ -8,8 +9,13 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.chunk.status.ChunkStatus
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.shapes.Shapes
@@ -69,6 +75,42 @@ object Util {
         }
 
         return rotated
+    }
+
+    fun place(level: Level, blockPos: BlockPos, blockState: BlockState) {
+        fun set(level: Level, blockPos: BlockPos, new: BlockState) {
+            if (new.canSurvive(level, blockPos)) {
+                level.setBlock(blockPos, new, Block.UPDATE_ALL)
+            }
+        }
+
+        val replacing = level.getBlockState(blockPos)
+        if (replacing.let { it.`is`(BlockTags.REPLACEABLE) || it.`is`(MagicThingsBlocks.fouledGrowth) && blockState != it }) {
+            if (blockState.getValue(BlockStateProperties.DOWN)) {
+                set(level, blockPos, FouledGrowthBlock.down(replacing))
+            }
+
+            if (blockState.getValue(BlockStateProperties.UP)) {
+                set(level, blockPos, FouledGrowthBlock.down(replacing))
+            }
+
+        }
+
+    }
+
+    fun nearbyFouledBiome(level: Level, blockPos: BlockPos): Boolean {
+        val distance = 4
+        for (x in -distance until distance) {
+            for (y in -distance until distance) {
+                for (z in -distance until distance) {
+                    if (level.getBiome(blockPos.offset(x, y, z)).`is`(MagicThingsBiomeTags.fouled)) {
+                        return true
+                    }
+
+                }
+            }
+        }
+        return false
     }
 
 }

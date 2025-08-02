@@ -30,7 +30,7 @@ class FouledTreeFeature() : Feature<NoneFeatureConfiguration>(NoneFeatureConfigu
             var relative = top.relative(direction)
 
             var i = 0
-            while (level.getBlockState(relative.below().also { relative = it }).`is`(BlockTags.REPLACEABLE)) {
+            while (level.getBlockState(relative.below().also { relative = it }).let { it.`is`(BlockTags.REPLACEABLE) || it.`is`(MagicThingsBlocks.fouledGrowth) }) {
                 if (i++ > 8) {
                     break
                 }
