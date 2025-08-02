@@ -11,6 +11,7 @@ public final class MagicThings implements ModInitializer, TerraBlenderApi {
     public void onInitialize() {
         MagicThingsBlocks.register();
         MagicThingsItems.register();
+        MagicThingsFeatures.register();
     }
 
     @Override

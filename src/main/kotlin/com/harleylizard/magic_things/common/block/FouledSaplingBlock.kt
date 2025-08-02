@@ -1,6 +1,5 @@
 package com.harleylizard.magic_things.common.block
 
-import com.harleylizard.magic_things.common.MagicThingsConfiguredFeatures
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.SaplingBlock

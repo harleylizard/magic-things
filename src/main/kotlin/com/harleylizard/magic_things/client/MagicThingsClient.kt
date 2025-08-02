@@ -1,6 +1,5 @@
 package com.harleylizard.magic_things.client
 
-import com.harleylizard.magic_things.common.MagicThingsBlocks
 import com.harleylizard.magic_things.common.MagicThingsItems
 import com.harleylizard.magic_things.common.payload.SendBiomesPayload
 import net.fabricmc.api.ClientModInitializer

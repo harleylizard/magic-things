@@ -1,6 +1,6 @@
 package com.harleylizard.magic_things.common;
 
-import com.harleylizard.magic_things.common.terrablender.FouledTreeFeature;
+import com.harleylizard.magic_things.common.feature.FouledTreeFeature;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.feature.Feature;

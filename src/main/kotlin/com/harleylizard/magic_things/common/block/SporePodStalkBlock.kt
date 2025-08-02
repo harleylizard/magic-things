@@ -1,6 +1,5 @@
 package com.harleylizard.magic_things.common.block
 
-import com.harleylizard.magic_things.common.MagicThingsBlocks
 import com.harleylizard.magic_things.common.MagicThingsItems
 import com.harleylizard.magic_things.common.Util
 import net.minecraft.core.BlockPos
