@@ -1,5 +1,6 @@
 {
   "values": [
+    "minecraft:air",
     "#minecraft:replaceable",
     "#minecraft:replaceable_by_trees"
   ]

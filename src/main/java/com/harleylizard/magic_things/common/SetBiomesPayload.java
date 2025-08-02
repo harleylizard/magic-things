@@ -64,7 +64,7 @@ public record SetBiomesPayload(Int2IntMap map, int x, int y, int z) implements C
         while (iterator.hasNext()) {
             var biome = iterator.next();
 
-            map.put(registry.getId(biome), container.data.palette().idFor(biome));
+            //map.put(registry.getId(biome), container.data.palette().idFor(biome));
         }
 
         return new SetBiomesPayload(Int2IntMaps.unmodifiable(map), x, y, z);
