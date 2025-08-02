@@ -1,7 +1,14 @@
 package com.harleylizard.magic_things.common;
 
 import com.harleylizard.magic_things.common.block.Facing;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -11,7 +18,29 @@ import org.joml.Vector3f;
 
 import java.util.Iterator;
 
-public final class Maths {
+public final class Util {
+
+    public static void setBiome(ServerLevel level, ResourceKey<Biome> biome, BlockPos blockPos) {
+        var x = blockPos.getX();
+        var y = blockPos.getY();
+        var z = blockPos.getZ();
+
+        var chunk = level.getChunk(x >> 4, z >> 4, ChunkStatus.FULL, false);
+        if (chunk != null) {
+            var section = chunk.getSection(chunk.getSectionIndex(y));
+
+            var biomes = section.getBiomes().recreate();
+
+            var holder = level.registryAccess().registry(Registries.BIOME).orElseThrow().getHolder(biome).orElseThrow();
+            biomes.set(0, 0, 0, holder);
+
+            ((BiomeSetter) section).magicThings$set(biomes);
+
+            for (var player : PlayerLookup.tracking(level, blockPos)) {
+                ServerPlayNetworking.send(player, SetBiomesPayload.from(biomes, x, y, z));
+            }
+        }
+    }
 
     public static VoxelShape rotateShape(VoxelShape shape, Quaternionf rotation) {
         var matrix4f = new Matrix4f();
@@ -53,6 +82,7 @@ public final class Maths {
         var minX = Math.min(fromX, toX);
         var minY = Math.min(fromY, toY);
         var minZ = Math.min(fromZ, toZ);
+
         var maxX = Math.max(toX, fromX);
         var maxY = Math.max(toY, fromY);
         var maxZ = Math.max(toZ, fromZ);

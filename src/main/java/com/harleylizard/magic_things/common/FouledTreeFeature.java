@@ -1,7 +1,5 @@
-package com.harleylizard.magic_things.common.feature;
+package com.harleylizard.magic_things.common;
 
-import com.harleylizard.magic_things.common.MagicThingsBlockTags;
-import com.harleylizard.magic_things.common.MagicThingsBlocks;
 import com.harleylizard.magic_things.common.block.Facing;
 import com.harleylizard.magic_things.common.block.FouledLogRootBlock;
 import net.minecraft.world.level.block.Block;

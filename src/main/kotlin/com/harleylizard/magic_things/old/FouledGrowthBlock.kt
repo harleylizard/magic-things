@@ -1,6 +1,5 @@
 package com.harleylizard.magic_things.old.common.block
 
-import com.harleylizard.magic_things.old.common.Util
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel

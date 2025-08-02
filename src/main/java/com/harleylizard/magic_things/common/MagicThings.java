@@ -1,9 +1,9 @@
 package com.harleylizard.magic_things.common;
 
-import com.harleylizard.magic_things.old.common.MagicThingsItems;
-import com.harleylizard.magic_things.old.common.payload.SendBiomesPayload;
 import com.harleylizard.magic_things.common.terrablender.MagicThingsRegion;
 import com.harleylizard.magic_things.common.terrablender.MagicThingsSurfaceRules;
+import com.harleylizard.magic_things.old.common.MagicThingsItems;
+import com.harleylizard.magic_things.old.common.payload.SendBiomesPayload;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -12,14 +12,19 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.NotNull;
 import org.ladysnake.cca.api.v3.chunk.ChunkComponentFactoryRegistry;
 import org.ladysnake.cca.api.v3.chunk.ChunkComponentInitializer;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
 import terrablender.api.Regions;
 import terrablender.api.SurfaceRuleManager;
 import terrablender.api.TerraBlenderApi;
 
 public final class MagicThings implements ModInitializer, TerraBlenderApi, ChunkComponentInitializer {
     public static final String MOD_ID = "magic-things";
+
+    public static final ComponentKey<DecayComponent> DECAY = ComponentRegistryV3.INSTANCE.getOrCreate(resourceLocation("decay"), DecayComponent.class);
 
     @Override
     public void onInitialize() {
@@ -42,8 +47,8 @@ public final class MagicThings implements ModInitializer, TerraBlenderApi, Chunk
     }
 
     @Override
-    public void registerChunkComponentFactories(ChunkComponentFactoryRegistry registry) {
-
+    public void registerChunkComponentFactories(@NotNull ChunkComponentFactoryRegistry registry) {
+        registry.register(DECAY, DecayComponent::new);
     }
 
     public static ResourceLocation resourceLocation(String path) {

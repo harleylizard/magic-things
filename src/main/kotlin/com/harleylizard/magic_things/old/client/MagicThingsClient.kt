@@ -1,7 +1,6 @@
 package com.harleylizard.magic_things.old.client
 
 import com.harleylizard.magic_things.old.common.MagicThingsItems
-import com.harleylizard.magic_things.old.common.payload.SendBiomesPayload
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
