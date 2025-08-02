@@ -1,0 +1,17 @@
+{
+	"textures": {
+		"particle": "#half",
+		"half": "magic-things:block/fouled_growth_bottom_half"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 15.5],
+			"to": [16, 16, 15.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 14.5]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#half", "tintindex": 0, "shade": false },
+				"south": {"uv": [0, 0, 16, 16], "texture": "#half", "tintindex": 0, "shade": false }
+			}
+		}
+	]
+}

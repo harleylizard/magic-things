@@ -1,0 +1,6 @@
+{
+	"parent": "magic-things:block/fouled_growth_bottom_half",
+	"textures": {
+		"half": "magic-things:block/fouled_growth"
+	}
+}

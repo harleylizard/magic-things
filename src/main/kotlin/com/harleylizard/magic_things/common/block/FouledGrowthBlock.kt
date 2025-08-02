@@ -1,5 +1,6 @@
 package com.harleylizard.magic_things.common.block
 
+import com.harleylizard.magic_things.common.Util
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.item.context.BlockPlaceContext
@@ -25,16 +26,34 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
     }
 
     override fun updateShape(blockState: BlockState, direction: Direction, blockState2: BlockState, levelAccessor: LevelAccessor, blockPos: BlockPos, blockPos2: BlockPos): BlockState? {
-        val i = fromBlockState(blockState)
+        var i = fromBlockState(blockState)
 
         for (direction in Direction.Plane.HORIZONTAL) {
+            if (!canGrowOn(levelAccessor, blockPos.relative(direction), direction)) {
+                i = i and (1 shl direction.ordinal).inv()
+            }
         }
 
-        return blockState //if (i == 0) Blocks.AIR.defaultBlockState() else reverse(i)
+        return if (i == 0) Blocks.AIR.defaultBlockState() else blockState
     }
 
-    override fun getStateForPlacement(blockPlaceContext: BlockPlaceContext): BlockState {
-        return defaultBlockState().setValue(sides, (3 shl (2 * 0)) or (1 shl (2 * 1)))
+    override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
+        val level = context.level
+        val blockPos = context.clickedPos
+
+        val blockState = defaultBlockState()
+
+        val face = context.clickedFace
+        if (canGrowOn(level, blockPos, face)) {
+            return when (face) {
+                Direction.UP -> blockState.setValue(BlockStateProperties.DOWN, true)
+                Direction.DOWN -> blockState.setValue(BlockStateProperties.UP, true)
+
+                else -> blockState.setValue(sides, 2 shl offset(face.ordinal))
+            }
+        }
+
+        return blockState
     }
 
     fun fromBlockState(blockState: BlockState): Int {
@@ -43,14 +62,6 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
         i = i or (has(blockState, BlockStateProperties.DOWN) shl 1)
 
         val j = blockState.getValue(sides)
-
-        for (direction in Direction.Plane.HORIZONTAL) {
-            val ordinal = direction.ordinal
-
-            val value = (j shr (2 * (ordinal - 2))) and 3
-
-            i = i or ((if (value > 0) 1 else 0) shl ordinal)
-        }
 
         return i
     }
@@ -61,10 +72,16 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
         return result
     }
 
-    fun has(blockState: BlockState, face: BooleanProperty) = if (blockState.getValue(face)) 1 else 0
+    fun offset(i: Int) = 2 * (i - 2)
+
+    fun has(blockState: BlockState, face: BooleanProperty) = has(blockState.getValue(face))
+
+    fun has(boolean: Boolean) = if (boolean) 1 else 0
+
+    fun canGrowOn(level: LevelAccessor, blockPos: BlockPos, direction: Direction) = Util.solid(level, blockPos.relative(direction.opposite), direction)
 
     companion object {
-        val sides: IntegerProperty = IntegerProperty.create("sides", 0, 255)
+        val sides: IntegerProperty = IntegerProperty.create("sides", 0, 256)
 
     }
 }
