@@ -28,7 +28,10 @@ public final class MagicThings implements ModInitializer, TerraBlenderApi, Chunk
     public void onInitialize() {
         MagicThingsBlocks.register();
         MagicThingsItems.register();
+
         MagicThingsFeatures.register();
+
+        Element.register();
 
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, resourceLocation("creative_tab"), FabricItemGroup.builder().icon(Items.DIRT::getDefaultInstance).displayItems((itemDisplayParameters, output) -> {
             output.accept(MagicThingsItems.FOULED_LOG);
