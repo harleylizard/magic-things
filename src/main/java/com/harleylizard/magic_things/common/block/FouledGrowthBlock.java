@@ -22,6 +22,35 @@ public final class FouledGrowthBlock extends ShapeBlock {
         builder.add(Y_SIDE);
     }
 
+    // todo:
+    public static int remove(int i, int j) {
+        return i;
+    }
+
+    public static int appendTop(int i) {
+        return i | (1 << 2 * 0);
+    }
+
+    public static int appendBottom(int i) {
+        return i | (1 << 2 * 1);
+    }
+
+    public static int appendFront(int i, int j) {
+        return i | ((j & 3) << 2 * 2);
+    }
+
+    public static int appendBack(int i, int j) {
+        return i | ((j & 3) << 2 * 3);
+    }
+
+    public static int appendLeft(int i, int j) {
+        return i | ((j & 3) << 2 * 4);
+    }
+
+    public static int appendRight(int i, int j) {
+        return i | ((j & 3) << 2 * 5);
+    }
+
     public static int fromBlockState(BlockState blockState) {
         var i = 0;
 
