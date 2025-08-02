@@ -13,7 +13,7 @@ public final class MagicThingsBlocks {
     public static final Block FOULED_LOG = new RotatedPillarBlock(Properties.of().sound(SoundType.SLIME_BLOCK));
     public static final Block FOULED_LOG_ROOT = new FouledLogRootBlock(Properties.ofFullCopy(FOULED_LOG).noOcclusion());
     public static final Block FOULED_WOOD = new RotatedPillarBlock(Properties.ofFullCopy(FOULED_LOG));
-    public static final Block FOULED_SAPLING = new FouledSaplingBlock(new TreeGrower("fouled", 0.1f, Optional.empty(), Optional.of(MagicThingsConfiguredFeatures.FOULED_TREE), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty()), Properties.ofFullCopy(Blocks.OAK_SAPLING).sound(SoundType.SLIME_BLOCK));
+    public static final Block FOULED_SAPLING = new FouledSaplingBlock(new TreeGrower("fouled", Optional.empty(), Optional.of(MagicThingsConfiguredFeatures.FOULED_TREE), Optional.empty()), Properties.ofFullCopy(Blocks.OAK_SAPLING).sound(SoundType.SLIME_BLOCK));
     public static final Block FOULED_GROWTH = new FouledGrowthBlock(Properties.of().sound(SoundType.SLIME_BLOCK).noCollission().noOcclusion().randomTicks());
     public static final Block SPORE_POD = new SporePodBlock(Properties.of().sound(SoundType.SLIME_BLOCK).noCollission().noOcclusion().randomTicks());
     public static final Block SPORE_POD_STEM = new SporePodStalkBlock(Properties.ofFullCopy(SPORE_POD));
