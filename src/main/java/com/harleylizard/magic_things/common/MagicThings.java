@@ -41,7 +41,7 @@ public final class MagicThings implements ModInitializer, TerraBlenderApi, Chunk
             output.accept(MagicThingsItems.FOULED_GROWTH);
             output.accept(MagicThingsItems.WILTING_GRASS);
 
-        }).title(Component.translatable("magic-things")).build());
+        }).title(Component.translatable("itemGroup.magic-things")).build());
 
         PayloadTypeRegistry.playS2C().register(SetBiomesPayload.TYPE, SetBiomesPayload.CODEC);
     }
