@@ -21,38 +21,28 @@ public sealed interface Filter<T> extends Predicate<Holder<T>> {
     }
 
     @Nullable
-    static <T> Filter<T> find(String entry, HolderLookup.Provider provider, ResourceKey<Registry<T>> key) {
+    static <T> Filter<T> find(String entry, HolderLookup.RegistryLookup<T> lookup) {
         if (entry.startsWith("!")) {
-            return new ExcludeFilter<>(find(entry.substring(entry.indexOf("!") + 1), provider, key));
+            return new ExcludeFilter<>(find(entry.substring(entry.indexOf("!") + 1), lookup));
         }
-
-        var registry = provider.lookup(key).orElseThrow();
 
         if (entry.startsWith("#")) {
             var location = ResourceLocation.parse(entry.substring(entry.indexOf("#") + 1));
 
-            if (fromMod(location.getPath())) {
-                var result = registry.listTagIds().filter(tag -> tag.location() == location).findAny();
+            var result = lookup.listTagIds().filter(tag -> tag.location() == location).findAny().orElse(null);
 
-                if (result.isPresent()) {
-                    return new TagFilter<>(result.get());
-                }
-            }
-
-            return null;
+            return result == null ? null : new TagFilter<>(result);
         }
 
         var location = ResourceLocation.parse(entry);
 
-        if (fromMod(location.getPath())) {
-            var result = registry.listElementIds().filter(resourceKey -> resourceKey.location() == location).findAny();
+        var result = lookup.listElementIds().filter(key -> key.location() == location).findAny().orElse(null);
 
-            if (result.isPresent()) {
-                return new ObjectFilter<>(result.get());
-            }
-        }
+        return result == null ? null : new ObjectFilter<>(result);
+    }
 
-        return null;
+    static <T> Filter<T> find(String entry, HolderLookup.Provider provider, ResourceKey<Registry<T>> registry) {
+        return find(entry, provider.lookupOrThrow(registry));
     }
 
     final class TagFilter<T> implements Filter<T> {
@@ -102,7 +92,7 @@ public sealed interface Filter<T> extends Predicate<Holder<T>> {
 
         @Override
         public boolean test(Holder<T> holder) {
-            return !filter.test(holder);
+            return filter.test(holder);
         }
 
         @Override
