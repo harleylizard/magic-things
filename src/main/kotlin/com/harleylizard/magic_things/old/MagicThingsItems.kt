@@ -1,6 +1,7 @@
-package com.harleylizard.magic_things.common
+package com.harleylizard.magic_things.old.common
 
-import com.harleylizard.magic_things.common.MagicThings.Companion.resourceLocation
+import com.harleylizard.magic_things.old.common.MagicThings.Companion.resourceLocation
+import com.harleylizard.magic_things.common.MagicThingsBlocks
 import com.harleylizard.magic_things.common.item.SporePodItem
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries

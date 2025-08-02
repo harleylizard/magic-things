@@ -1,7 +1,7 @@
-package com.harleylizard.magic_things.common.payload
+package com.harleylizard.magic_things.old.common.payload
 
-import com.harleylizard.magic_things.common.MagicThings.Companion.resourceLocation
-import com.harleylizard.magic_things.common.payload.Construct.Companion.construct
+import com.harleylizard.magic_things.old.common.MagicThings.Companion.resourceLocation
+import com.harleylizard.magic_things.old.common.payload.Construct.Companion.construct
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload

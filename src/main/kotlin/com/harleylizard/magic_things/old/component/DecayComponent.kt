@@ -1,12 +1,10 @@
-package com.harleylizard.magic_things.common.component
+package com.harleylizard.magic_things.old.common.component
 
-import com.harleylizard.magic_things.common.Util.to
-import com.harleylizard.magic_things.common.Util.until
+import com.harleylizard.magic_things.old.common.Util.to
+import com.harleylizard.magic_things.old.common.Util.until
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.chunk.ChunkAccess
 import net.minecraft.world.level.chunk.LevelChunk
 import org.ladysnake.cca.api.v3.component.ComponentV3

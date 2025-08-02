@@ -1,15 +1,10 @@
-package com.harleylizard.magic_things.common
+package com.harleylizard.magic_things.old.common
 
-import com.harleylizard.magic_things.common.component.DecayComponent
-import com.harleylizard.magic_things.common.payload.SendBiomesPayload
+import com.harleylizard.magic_things.common.MagicThingsBlocks
+import com.harleylizard.magic_things.common.MagicThingsFeatures
+import com.harleylizard.magic_things.old.common.component.DecayComponent
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
-import net.minecraft.core.Registry
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Items
 import org.ladysnake.cca.api.v3.chunk.ChunkComponentFactoryRegistry
 import org.ladysnake.cca.api.v3.chunk.ChunkComponentInitializer
 import org.ladysnake.cca.api.v3.component.ComponentKey

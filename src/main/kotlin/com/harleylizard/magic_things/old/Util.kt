@@ -1,8 +1,11 @@
-package com.harleylizard.magic_things.common
+package com.harleylizard.magic_things.old.common
 
-import com.harleylizard.magic_things.common.block.FouledGrowthBlock
-import com.harleylizard.magic_things.common.payload.Construct.Companion.construct
-import com.harleylizard.magic_things.common.payload.SendBiomesPayload
+import com.harleylizard.magic_things.common.BiomeSetter
+import com.harleylizard.magic_things.common.MagicThingsBiomeTags
+import com.harleylizard.magic_things.common.MagicThingsBlockTags
+import com.harleylizard.magic_things.old.common.block.FouledGrowthBlock
+import com.harleylizard.magic_things.old.common.payload.Construct.Companion.construct
+import com.harleylizard.magic_things.old.common.payload.SendBiomesPayload
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.core.BlockPos
@@ -89,11 +92,11 @@ object Util {
         val replacing = level.getBlockState(blockPos)
         if (replacing.`is`(MagicThingsBlockTags.fouledGrowthCanReplace)) {
             if (blockState.getValue(BlockStateProperties.DOWN) && random.nextInt(5) == 0) {
-                set(level, blockPos, FouledGrowthBlock.down(replacing))
+                set(level, blockPos, FouledGrowthBlock.Companion.down(replacing))
             }
 
             if (blockState.getValue(BlockStateProperties.UP) && random.nextInt(5) == 0) {
-                set(level, blockPos, FouledGrowthBlock.up(replacing))
+                set(level, blockPos, FouledGrowthBlock.Companion.up(replacing))
             }
 
         }

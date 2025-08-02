@@ -1,6 +1,7 @@
 package com.harleylizard.magic_things.common;
 
 import com.harleylizard.magic_things.common.block.Facing;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -95,16 +96,8 @@ public final class Maths {
 
         private Position() {}
 
-        public int x() {
-            return x;
-        }
-
-        public int y() {
-            return y;
-        }
-
-        public int z() {
-            return z;
+        public BlockPos offset(BlockPos blockPos) {
+            return blockPos.offset(x, y, z);
         }
 
     }

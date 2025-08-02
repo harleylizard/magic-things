@@ -1,4 +1,4 @@
-package com.harleylizard.magic_things.common.payload
+package com.harleylizard.magic_things.old.common.payload
 
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap
 import it.unimi.dsi.fastutil.ints.Int2IntMap

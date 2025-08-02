@@ -1,6 +1,7 @@
 package com.harleylizard.magic_things.common;
 
-import com.harleylizard.magic_things.common.payload.SendBiomesPayload;
+import com.harleylizard.magic_things.old.common.MagicThingsItems;
+import com.harleylizard.magic_things.old.common.payload.SendBiomesPayload;
 import com.harleylizard.magic_things.common.terrablender.MagicThingsRegion;
 import com.harleylizard.magic_things.common.terrablender.MagicThingsSurfaceRules;
 import net.fabricmc.api.ModInitializer;
