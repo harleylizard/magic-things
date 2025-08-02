@@ -9,10 +9,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Set;
 import java.util.function.Predicate;
 
 public sealed interface Filter<T> extends Predicate<Holder<T>> {
+
+    boolean exclusive();
 
     @Deprecated
     private static boolean fromMod(String mod) {
@@ -54,11 +55,6 @@ public sealed interface Filter<T> extends Predicate<Holder<T>> {
         return null;
     }
 
-    static <T> boolean compare(Set<Filter<T>> set) {
-
-        return false;
-    }
-
     final class TagFilter<T> implements Filter<T> {
         private final TagKey<T> tag;
 
@@ -69,6 +65,11 @@ public sealed interface Filter<T> extends Predicate<Holder<T>> {
         @Override
         public boolean test(Holder<T> holder) {
             return holder.is(tag);
+        }
+
+        @Override
+        public boolean exclusive() {
+            return false;
         }
 
     }
@@ -85,6 +86,11 @@ public sealed interface Filter<T> extends Predicate<Holder<T>> {
             return holder.is(key);
         }
 
+        @Override
+        public boolean exclusive() {
+            return false;
+        }
+
     }
 
     final class ExcludeFilter<T> implements Filter<T> {
@@ -97,6 +103,11 @@ public sealed interface Filter<T> extends Predicate<Holder<T>> {
         @Override
         public boolean test(Holder<T> holder) {
             return !filter.test(holder);
+        }
+
+        @Override
+        public boolean exclusive() {
+            return true;
         }
 
     }
