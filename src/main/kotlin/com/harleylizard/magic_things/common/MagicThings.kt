@@ -2,8 +2,6 @@ package com.harleylizard.magic_things.common
 
 import com.harleylizard.magic_things.common.component.DecayComponent
 import com.harleylizard.magic_things.common.payload.SendBiomesPayload
-import com.harleylizard.magic_things.common.terrablender.MagicThingsRegion
-import com.harleylizard.magic_things.common.terrablender.MagicThingsSurfaceRules
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
@@ -27,18 +25,7 @@ class MagicThings : ModInitializer, TerraBlenderApi, ChunkComponentInitializer {
         MagicThingsItems.register()
         MagicThingsFeatures.register()
 
-        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, "creative_tab".resourceLocation, FabricItemGroup.builder().icon(Items.DIRT::getDefaultInstance).displayItems { itemDisplayParameters, output ->
-            output.accept(MagicThingsItems.fouledLog)
-            output.accept(MagicThingsItems.fouledWood)
-            output.accept(MagicThingsItems.fouledLogRoots)
-            output.accept(MagicThingsItems.fouledSapling)
-            output.accept(MagicThingsItems.fouledGrowth)
-            output.accept(MagicThingsItems.sporePod)
-            output.accept(MagicThingsItems.wiltingGrass)
 
-        }.title(Component.translatable("magic-things")).build())
-
-        PayloadTypeRegistry.playS2C().register(SendBiomesPayload.type, SendBiomesPayload.codec)
 
     }
 

@@ -1,9 +1,8 @@
 package com.harleylizard.magic_things.common.block;
 
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-public final class FouledLogRootBlock extends Block {
+public final class FouledLogRootBlock extends ShapeBlock {
 
     public FouledLogRootBlock(Properties properties) {
         super(properties);
