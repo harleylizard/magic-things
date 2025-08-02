@@ -42,7 +42,6 @@ public final class Maths {
         }
 
         return result;
-
     }
 
     public static VoxelShape rotateShape(VoxelShape shape, Facing facing) {
