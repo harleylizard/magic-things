@@ -12,8 +12,10 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.phys.shapes.VoxelShape
 
 class FouledLogRootsBlock(properties: Properties) : Block(properties) {
+    val shapes = mutableMapOf<BlockState, VoxelShape>()
 
     init {
         registerDefaultState(stateDefinition.any().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH))

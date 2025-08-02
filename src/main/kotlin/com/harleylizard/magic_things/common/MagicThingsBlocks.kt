@@ -18,7 +18,7 @@ object MagicThingsBlocks {
     val fouledWood = RotatedPillarBlock(Properties.ofFullCopy(fouledLog))
     val fouledLogRoots = FouledLogRootsBlock(Properties.of().noOcclusion())
     val fouledSapling = FouledSaplingBlock(TreeGrower.OAK, Properties.ofFullCopy(Blocks.OAK_SAPLING))
-    val fouledGrowth = FouledGrowthBlock(Properties.of().noCollission().noOcclusion())
+    val fouledGrowth = FouledGrowthBlock(Properties.of().noCollission().noOcclusion().randomTicks())
     val wiltingGrass = TallGrassBlock(Properties.ofFullCopy(Blocks.SHORT_GRASS))
 
     fun register() {
