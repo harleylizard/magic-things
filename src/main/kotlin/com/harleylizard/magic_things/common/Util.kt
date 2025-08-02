@@ -20,9 +20,8 @@ import net.minecraft.world.level.chunk.status.ChunkStatus
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.joml.Matrix4f
-import org.joml.Quaternionf
-import org.joml.Vector3f
+import org.joml.*
+import java.util.*
 
 object Util {
 
@@ -106,6 +105,29 @@ object Util {
     operator fun BlockPos.component3() = z
 
     infix fun BlockPos.until(blockPos: BlockPos): Iterable<BlockPos> = BlockPos.betweenClosed(this, blockPos)
+
+    infix fun Int.to(y: Int) = Vector2i(this, y)
+
+    infix fun Vector2i.to(z: Int) = Vector3i(x, y, z)
+
+    infix fun Vector3i.until(vector3i: Vector3i): Iterator<Vector3i> {
+        val minX = x.coerceAtMost(vector3i.x)
+        val minY = y.coerceAtMost(vector3i.y)
+        val minZ = z.coerceAtMost(vector3i.z)
+        val maxX = x.coerceAtLeast(vector3i.x)
+        val maxY = y.coerceAtLeast(vector3i.y)
+        val maxZ = z.coerceAtLeast(vector3i.z)
+
+        val set: MutableSet<Vector3i> = HashSet((maxX - minX) * (maxY - minY) * (maxZ - minZ))
+        for (x in minX until maxX) {
+            for (y in minY until maxY) {
+                for (z in minZ until maxZ) {
+                    set += Vector3i(x, y, z)
+                }
+            }
+        }
+        return Collections.unmodifiableSet(set).iterator()
+    }
 
     inline fun <T> Iterable<T>.any(test: (T) -> Boolean): Boolean {
         for (t in this) {
