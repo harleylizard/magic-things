@@ -26,32 +26,32 @@ class DecayComponent(val chunk: ChunkAccess) : ComponentV3, ServerTickingCompone
         if (chunk is LevelChunk) {
             val level = chunk.level
             val random = level.random
-            if (random.nextInt(15) == 0) {
+            if (random.nextInt(23) == 0) {
                 val sections = chunk.sections
                 val chunkPos = chunk.chunkPos
                 loop@ for (i in chunk.minSection until chunk.maxSection) {
                     val section = sections[chunk.getSectionIndexFromSectionY(i)]
 
-                    if (random.nextInt(sections.size) == 0) {
-                        ((0 to 0 to 0) until (16 to 16 to 16)).forEach {
-                            val blockPos = BlockPos(it.x + (chunkPos.x shl 4), it.y + (i shl 4), it.z + (chunkPos.z shl 4))
+                    if (section.states.registry.any { blockState -> blockState.`is`(MagicThingsBlockTags.decaysInFouledBiome) }) {
+                        if (random.nextInt(sections.size) == 0) {
+                            ((0 to 0 to 0) until (16 to 16 to 16)).forEach {
+                                val blockPos = BlockPos(it.x + (chunkPos.x shl 4), it.y + (i shl 4), it.z + (chunkPos.z shl 4))
 
-                            if (!level.getBiome(blockPos).`is`(MagicThingsBiomeTags.fouled)) {
-                                continue@loop
-                            }
+                                if (!level.getBiome(blockPos).`is`(MagicThingsBiomeTags.fouled)) {
+                                    continue@loop
+                                }
 
-                            if (random.nextInt(15) == 0) {
-                                val blockState = chunk.getBlockState(blockPos)
-                                if (blockState.`is`(MagicThingsBlockTags.decaysInFouledBiome)) {
-                                    level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL)
-                                    level.addDestroyBlockEffect(blockPos, blockState)
+                                if (random.nextInt(15) == 0) {
+                                    val blockState = chunk.getBlockState(blockPos)
+                                    if (blockState.`is`(MagicThingsBlockTags.decaysInFouledBiome)) {
+                                        level.destroyBlock(blockPos, true)
+                                    }
+
                                 }
 
                             }
-
                         }
                     }
-
                 }
 
             }
