@@ -65,10 +65,10 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
         return fromBlockState(blockState) > 0 && super.isRandomlyTicking(blockState)
     }
 
-    override fun randomTick(blockState: BlockState, level: ServerLevel, blockPos: BlockPos, randomSource: RandomSource) {
-        if (Util.nearbyFouledBiome(level, blockPos)) {
+    override fun randomTick(blockState: BlockState, level: ServerLevel, blockPos: BlockPos, random: RandomSource) {
+        if (Util.nearbyFouledBiome(level, blockPos) && random.nextInt(15) == 0) {
             for (direction in Direction.entries) {
-                Util.place(level, blockPos.relative(direction), blockState)
+                Util.place(level, blockPos.relative(direction), blockState, random)
             }
         }
     }
@@ -102,8 +102,6 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
     }
 
     fun canGrowOn(level: LevelReader, blockPos: BlockPos, direction: Direction) = Util.solid(level, blockPos.relative(direction.opposite), direction)
-
-
 
     companion object {
         val sides: IntegerProperty = IntegerProperty.create("sides", 0, 256)

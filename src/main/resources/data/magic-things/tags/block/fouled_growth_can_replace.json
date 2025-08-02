@@ -1,0 +1,10 @@
+{
+  "values": [
+    "#minecraft:replaceable",
+    "#minecraft:small_flowers",
+    "minecraft:red_mushroom",
+    "minecraft:brown_mushroom",
+    "magic-things:fouled_growth",
+    "biomesoplenty:toadstool"
+  ]
+}

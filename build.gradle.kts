@@ -14,6 +14,7 @@ repositories {
     mavenCentral()
     maven("https://cursemaven.com")
     maven("https://maven.minecraftforge.net/")
+    maven("https://maven.ladysnake.org/releases")
 }
 
 dependencies {
@@ -32,6 +33,10 @@ dependencies {
     modImplementation("com.github.glitchfiend:TerraBlender-fabric:1.21.1-4.1.0.8") {
         exclude(group = "net.fabricmc.fabric-api")
     }
+
+    modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-base:6.1.2")
+    modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-entity:6.1.2")
+    modImplementation("org.ladysnake.cardinal-components-api:cardinal-components-chunk:6.1.2")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")

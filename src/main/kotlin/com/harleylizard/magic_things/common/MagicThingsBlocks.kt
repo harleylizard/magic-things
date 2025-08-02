@@ -9,16 +9,17 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.TallGrassBlock
 import net.minecraft.world.level.block.grower.TreeGrower
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 
 object MagicThingsBlocks {
-    val fouledLog = RotatedPillarBlock(Properties.of())
+    val fouledLog = RotatedPillarBlock(Properties.of().sound(SoundType.SLIME_BLOCK))
     val fouledWood = RotatedPillarBlock(Properties.ofFullCopy(fouledLog))
-    val fouledLogRoots = FouledLogRootsBlock(Properties.of().noOcclusion())
-    val fouledSapling = FouledSaplingBlock(TreeGrower.OAK, Properties.ofFullCopy(Blocks.OAK_SAPLING))
-    val fouledGrowth = FouledGrowthBlock(Properties.of().noCollission().noOcclusion().randomTicks())
+    val fouledLogRoots = FouledLogRootsBlock(Properties.of().sound(SoundType.SLIME_BLOCK).noOcclusion())
+    val fouledSapling = FouledSaplingBlock(TreeGrower.OAK, Properties.ofFullCopy(Blocks.OAK_SAPLING).sound(SoundType.SLIME_BLOCK))
+    val fouledGrowth = FouledGrowthBlock(Properties.of().sound(SoundType.SLIME_BLOCK).noCollission().noOcclusion().randomTicks())
     val wiltingGrass = TallGrassBlock(Properties.ofFullCopy(Blocks.SHORT_GRASS))
 
     fun register() {

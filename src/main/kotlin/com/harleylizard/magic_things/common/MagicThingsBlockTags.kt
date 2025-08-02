@@ -6,6 +6,9 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 
 object MagicThingsBlockTags {
-    val fouledSaplingGrowsOn: TagKey<Block> = TagKey.create(Registries.BLOCK, "fouled_sapling_grows_on".resourceLocation)
+    val fouledSaplingGrowsOn = "fouled_sapling_grows_on".tag
+    val fouledGrowthCanReplace = "fouled_growth_can_replace".tag
+
+    val String.tag: TagKey<Block> get() = TagKey.create(Registries.BLOCK, resourceLocation)
 
 }

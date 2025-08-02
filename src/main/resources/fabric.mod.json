@@ -22,6 +22,9 @@
     ],
     "terrablender": [
       "com.harleylizard.magic_things.common.MagicThings"
+    ],
+    "cardinal-components": [
+      "com.harleylizard.magic_things.common.MagicThings"
     ]
   },
   "mixins": [
@@ -37,5 +40,8 @@
     "another-mod": "*"
   },
   "custom": {
+    "cardinal-components": [
+      "magic-things:decay"
+    ]
   }
 }

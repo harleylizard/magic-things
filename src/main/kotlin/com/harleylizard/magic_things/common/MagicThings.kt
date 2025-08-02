@@ -1,5 +1,6 @@
 package com.harleylizard.magic_things.common
 
+import com.harleylizard.magic_things.common.component.DecayComponent
 import com.harleylizard.magic_things.common.payload.SendBiomesPayload
 import com.harleylizard.magic_things.common.terrablender.MagicThingsRegion
 import com.harleylizard.magic_things.common.terrablender.MagicThingsSurfaceRules
@@ -11,11 +12,15 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
+import org.ladysnake.cca.api.v3.chunk.ChunkComponentFactoryRegistry
+import org.ladysnake.cca.api.v3.chunk.ChunkComponentInitializer
+import org.ladysnake.cca.api.v3.component.ComponentKey
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3
 import terrablender.api.Regions
 import terrablender.api.SurfaceRuleManager
 import terrablender.api.TerraBlenderApi
 
-class MagicThings : ModInitializer, TerraBlenderApi {
+class MagicThings : ModInitializer, TerraBlenderApi, ChunkComponentInitializer {
 
     override fun onInitialize() {
         MagicThingsBlocks.register()
@@ -42,10 +47,15 @@ class MagicThings : ModInitializer, TerraBlenderApi {
         SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, MagicThingsSurfaceRules.surfaceRules())
     }
 
+    override fun registerChunkComponentFactories(registry: ChunkComponentFactoryRegistry) {
+        registry.register(decay, ::DecayComponent)
+    }
+
     companion object {
         const val MOD_ID = "magic-things"
 
         val String.resourceLocation: ResourceLocation get() = ResourceLocation.fromNamespaceAndPath(MOD_ID, this);
 
+        val decay: ComponentKey<DecayComponent> = ComponentRegistryV3.INSTANCE.getOrCreate("decay".resourceLocation, DecayComponent::class.java)
     }
 }

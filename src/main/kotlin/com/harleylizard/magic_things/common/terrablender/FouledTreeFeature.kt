@@ -1,10 +1,12 @@
 package com.harleylizard.magic_things.common.terrablender
 
+import com.harleylizard.magic_things.common.MagicThingsBlockTags
 import com.harleylizard.magic_things.common.MagicThingsBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.levelgen.feature.Feature
@@ -30,7 +32,7 @@ class FouledTreeFeature() : Feature<NoneFeatureConfiguration>(NoneFeatureConfigu
             var relative = top.relative(direction)
 
             var i = 0
-            while (level.getBlockState(relative.below().also { relative = it }).let { it.`is`(BlockTags.REPLACEABLE) || it.`is`(MagicThingsBlocks.fouledGrowth) }) {
+            while (level.getBlockState(relative.below().also { relative = it }).let { it.`is`(MagicThingsBlockTags.fouledGrowthCanReplace) }) {
                 if (i++ > 8) {
                     break
                 }

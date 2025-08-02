@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.tags.BlockTags
+import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.biome.Biome
@@ -25,7 +25,6 @@ import org.joml.Quaternionf
 import org.joml.Vector3f
 
 object Util {
-    val horizontal: Array<Direction> = arrayOf(Direction.SOUTH, Direction.EAST, Direction.NORTH, Direction.WEST)
 
     fun set(level: ServerLevel, biome: ResourceKey<Biome>, blockPos: BlockPos) {
         val x = blockPos.x
@@ -47,9 +46,7 @@ object Util {
 
     }
 
-    fun solid(level: LevelReader, blockPos: BlockPos, direction: Direction) = level.getBlockState(blockPos).let {
-        it.isFaceSturdy(level, blockPos, direction) && !it.propagatesSkylightDown(level, blockPos)
-    }
+    fun solid(level: LevelReader, blockPos: BlockPos, direction: Direction) = level.getBlockState(blockPos).let { it.isFaceSturdy(level, blockPos, direction) && !it.propagatesSkylightDown(level, blockPos) }
 
     fun rotate(shape: VoxelShape, quaternionf: Quaternionf): VoxelShape {
         val matrix4f = Matrix4f()
@@ -77,7 +74,7 @@ object Util {
         return rotated
     }
 
-    fun place(level: Level, blockPos: BlockPos, blockState: BlockState) {
+    fun place(level: Level, blockPos: BlockPos, blockState: BlockState, random: RandomSource) {
         fun set(level: Level, blockPos: BlockPos, new: BlockState) {
             if (new.canSurvive(level, blockPos)) {
                 level.setBlock(blockPos, new, Block.UPDATE_ALL)
@@ -85,30 +82,34 @@ object Util {
         }
 
         val replacing = level.getBlockState(blockPos)
-        if (replacing.let { it.`is`(BlockTags.REPLACEABLE) || it.`is`(MagicThingsBlocks.fouledGrowth) && blockState != it }) {
-            if (blockState.getValue(BlockStateProperties.DOWN)) {
+        if (replacing.`is`(MagicThingsBlockTags.fouledGrowthCanReplace)) {
+            if (blockState.getValue(BlockStateProperties.DOWN) && random.nextInt(5) == 0) {
                 set(level, blockPos, FouledGrowthBlock.down(replacing))
             }
 
-            if (blockState.getValue(BlockStateProperties.UP)) {
-                set(level, blockPos, FouledGrowthBlock.down(replacing))
+            if (blockState.getValue(BlockStateProperties.UP) && random.nextInt(5) == 0) {
+                set(level, blockPos, FouledGrowthBlock.up(replacing))
             }
 
         }
 
     }
 
-    fun nearbyFouledBiome(level: Level, blockPos: BlockPos): Boolean {
-        val distance = 4
-        for (x in -distance until distance) {
-            for (y in -distance until distance) {
-                for (z in -distance until distance) {
-                    if (level.getBiome(blockPos.offset(x, y, z)).`is`(MagicThingsBiomeTags.fouled)) {
-                        return true
-                    }
+    fun nearbyFouledBiome(level: Level, blockPos: BlockPos) = (blockPos.offset(-4, -4, -4) until blockPos.offset(4, 4, 4)).any {
+        level.getBiome(blockPos.offset(it)).`is`(MagicThingsBiomeTags.fouled)
+    }
 
-                }
-            }
+    operator fun BlockPos.component1() = x
+
+    operator fun BlockPos.component2() = y
+
+    operator fun BlockPos.component3() = z
+
+    infix fun BlockPos.until(blockPos: BlockPos): Iterable<BlockPos> = BlockPos.betweenClosed(this, blockPos)
+
+    inline fun <T> Iterable<T>.any(test: (T) -> Boolean): Boolean {
+        for (t in this) {
+            if (test(t)) return true
         }
         return false
     }
