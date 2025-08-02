@@ -1,5 +1,6 @@
 package com.harleylizard.magic_things.common.block;
 
+import com.harleylizard.magic_things.common.MagicThingsBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -25,24 +26,36 @@ public final class FouledGrowthBlock extends ShapeBlock {
         var i = 0;
 
         int j = blockState.getValue(Y_SIDE);
-        i |= j & 1;
-        i |= ((j >> 1) & 1) << 1;
+        i |= ((j >> 0) & 1) << 2 * 0;
+        i |= ((j >> 1) & 1) << 2 * 1;
 
         int k = blockState.getValue(XZ_SIDE);
-        i |= oneOrZero(k, 0) << 2;
-        i |= oneOrZero(k, 1) << 3;
-        i |= oneOrZero(k, 2) << 4;
-        i |= oneOrZero(k, 3) << 5;
+        i |= growthStage(k, 0) << 2 * 2;
+        i |= growthStage(k, 1) << 2 * 3;
+        i |= growthStage(k, 2) << 2 * 4;
+        i |= growthStage(k, 3) << 2 * 5;
 
         return i;
     }
 
     public static BlockState toBlockState(int i) {
-        return null;
+        var j = 0;
+        j |= ((i >> 0) & 1) << 0;
+        j |= ((i >> 1) & 1) << 1;
+
+        var blockState = MagicThingsBlocks.FOULED_GROWTH.defaultBlockState().setValue(Y_SIDE, j);
+
+        var k = 0;
+        k |= growthStage(i, 2) << 2 * 0;
+        k |= growthStage(i, 3) << 2 * 1;
+        k |= growthStage(i, 4) << 2 * 2;
+        k |= growthStage(i, 5) << 2 * 3;
+
+        return blockState.setValue(XZ_SIDE, k);
     }
 
-    private static int oneOrZero(int i, int j) {
-        return ((i >> 2 * j) & 3) > 0 ? 1 : 0;
+    private static int growthStage(int i, int j) {
+        return (i >> 2 * j) & 3;
     }
 
 }
