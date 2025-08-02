@@ -23,7 +23,7 @@ public final class FouledLogRootBlock extends ShapeBlock {
 
     @Override
     public @NotNull BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
-        return set(defaultBlockState(), Facing.getFrom(context.getHorizontalDirection()));
+        return set(defaultBlockState(), Facing.fromDirection(context.getHorizontalDirection()));
     }
 
     @Override

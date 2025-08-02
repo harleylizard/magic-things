@@ -1,9 +1,7 @@
 package com.harleylizard.magic_things.common;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -14,11 +12,6 @@ import java.util.function.Predicate;
 public sealed interface Filter<T> extends Predicate<Holder<T>> {
 
     boolean exclusive();
-
-    @Deprecated
-    private static boolean fromMod(String mod) {
-        return FabricLoader.getInstance().isModLoaded(mod) || mod.equals("minecraft");
-    }
 
     @Nullable
     static <T> Filter<T> find(String entry, HolderLookup.RegistryLookup<T> lookup) {
@@ -39,10 +32,6 @@ public sealed interface Filter<T> extends Predicate<Holder<T>> {
         var result = lookup.listElementIds().filter(key -> key.location() == location).findAny().orElse(null);
 
         return result == null ? null : new ObjectFilter<>(result);
-    }
-
-    static <T> Filter<T> find(String entry, HolderLookup.Provider provider, ResourceKey<Registry<T>> registry) {
-        return find(entry, provider.lookupOrThrow(registry));
     }
 
     final class TagFilter<T> implements Filter<T> {

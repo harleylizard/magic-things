@@ -42,7 +42,7 @@ public enum Facing implements StringRepresentable {
         return new BlockPos(blockPos.getX() + x, blockPos.getY(), blockPos.getZ() + z);
     }
 
-    public static Facing getFrom(Direction direction) {
+    public static Facing fromDirection(Direction direction) {
         return FROM_DIRECTION[direction.ordinal() - 2];
     }
 
