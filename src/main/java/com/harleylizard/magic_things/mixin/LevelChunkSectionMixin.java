@@ -15,12 +15,9 @@ public abstract class LevelChunkSectionMixin implements BiomeSetter {
 
     @Shadow private PalettedContainerRO<Holder<Biome>> biomes;
 
-    @Shadow public abstract void release();
-
     @Override
     public void magicThings$set(@NotNull PalettedContainer<@NotNull Holder<@NotNull Biome>> biomes) {
         this.biomes = biomes;
-        release();
     }
 
 }

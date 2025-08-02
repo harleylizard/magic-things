@@ -2,10 +2,8 @@ package com.harleylizard.magic_things.client;
 
 import com.harleylizard.magic_things.common.MagicThingsBlocks;
 import com.harleylizard.magic_things.common.MagicThingsItems;
-import com.harleylizard.magic_things.common.SetBiomesPayload;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
@@ -17,9 +15,6 @@ public final class MagicThingsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ClientPlayNetworking.registerGlobalReceiver(SetBiomesPayload.TYPE, (payload, context) -> {
-
-        });
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(),
                 MagicThingsBlocks.FOULED_SAPLING,

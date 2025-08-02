@@ -1,15 +1,13 @@
 package com.harleylizard.magic_things.common;
 
 import com.harleylizard.magic_things.common.block.Facing;
-import com.harleylizard.magic_things.mixin.BiomeManagerAccessor;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeManager;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -19,6 +17,7 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.Iterator;
+import java.util.List;
 
 public final class Util {
 
@@ -29,72 +28,24 @@ public final class Util {
 
         var chunk = level.getChunk(x >> 4, z >> 4, ChunkStatus.FULL, false);
         if (chunk != null) {
-            var section = chunk.getSection(chunk.getSectionIndex(y));
-
-            var biomes = section.getBiomes().recreate();
-
             var holder = level.registryAccess().registry(Registries.BIOME).orElseThrow().getHolder(biome).orElseThrow();
 
-            var nearest = nearestNeighbour(blockPos, level.getBiomeManager());
-            biomes.set(
-                    nearest.getX(),
-                    nearest.getY(),
-                    nearest.getZ(), holder);
+            chunk.fillBiomesFromNoise((i, j, k, sampler) -> biomeForCoordinate(chunk, holder, i, k, k, blockPos), level.getChunkSource().randomState().sampler());
+            chunk.setUnsaved(true);
 
-            ((BiomeSetter) section).magicThings$set(biomes);
-
-            for (var player : PlayerLookup.tracking(level, blockPos)) {
-                ServerPlayNetworking.send(player, SetBiomesPayload.from(biomes, x, y, z));
-            }
+            level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(chunk));
         }
     }
 
-    public static BlockPos nearestNeighbour(BlockPos pos, BiomeManager manager) {
-        var x = pos.getX() - 2;
-        var y = pos.getY() - 2;
-        var z = pos.getZ() - 2;
-        var i = x >> 2;
-        var j = y >> 2;
-        var k = z >> 2;
+    public static Holder<Biome> biomeForCoordinate(ChunkAccess chunk, Holder<Biome> biome,
+                                                   int quarterX,
+                                                   int quarterY,
+                                                   int quarterZ, BlockPos blockPos) {
+        var blockX = quarterX << 2;
+        var blockY = quarterY << 2;
+        var blockZ = quarterZ << 2;
 
-        var distanceX = (x & 3) / 4.0d;
-        var distanceY = (y & 3) / 4.0d;
-        var distanceZ = (z & 3) / 4.0d;
-
-        var smallest = Double.POSITIVE_INFINITY;
-        var nearest = 0;
-
-        for (var corner = 0; corner <= 7; corner++) {
-            var furthest = BiomeManagerAccessor.magicThings$getFiddledDistance(((BiomeManagerAccessor) manager).magicThings$biomeSeedZoom(),
-                    i + x(corner),
-                    j + y(corner),
-                    k + z(corner),
-                    distanceX - x(corner),
-                    distanceY - y(corner),
-                    distanceZ - z(corner));
-
-            if (smallest > furthest) {
-                nearest = corner;
-                smallest = furthest;
-            }
-        }
-
-        i += x(nearest);
-        j += y(nearest);
-        k += z(nearest);
-        return new BlockPos(i & 3, j & 3, k & 3);
-    }
-
-    private static int x(int i) {
-        return (i & 4) == 0 ? 1 : 0;
-    }
-
-    private static int y(int i) {
-        return (i & 2) == 0 ? 1 : 0;
-    }
-
-    private static int z(int i) {
-        return (i & 1) == 0 ? 1 : 0;
+        return chunk.getNoiseBiome(quarterX, quarterY, quarterZ);
     }
 
     public static VoxelShape rotateShape(VoxelShape shape, Quaternionf rotation) {

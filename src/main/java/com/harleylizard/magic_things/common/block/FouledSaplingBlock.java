@@ -1,6 +1,8 @@
 package com.harleylizard.magic_things.common.block;
 
+import com.harleylizard.magic_things.common.MagicThingsBiomes;
 import com.harleylizard.magic_things.common.MagicThingsBlockTags;
+import com.harleylizard.magic_things.common.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -24,6 +26,7 @@ public final class FouledSaplingBlock extends SaplingBlock {
     @Override
     public void advanceTree(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, RandomSource randomSource) {
         super.advanceTree(serverLevel, blockPos, blockState, randomSource);
+        Util.setBiome(serverLevel, MagicThingsBiomes.FOULED_FOREST, blockPos);
     }
 
 }

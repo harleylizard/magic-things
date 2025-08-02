@@ -4,7 +4,6 @@ import com.harleylizard.magic_things.common.terrablender.MagicThingsRegion;
 import com.harleylizard.magic_things.common.terrablender.MagicThingsSurfaceRules;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -42,8 +41,6 @@ public final class MagicThings implements ModInitializer, TerraBlenderApi, Chunk
             output.accept(MagicThingsItems.WILTING_GRASS);
 
         }).title(Component.translatable("itemGroup.magic-things")).build());
-
-        PayloadTypeRegistry.playS2C().register(SetBiomesPayload.TYPE, SetBiomesPayload.CODEC);
     }
 
     @Override
