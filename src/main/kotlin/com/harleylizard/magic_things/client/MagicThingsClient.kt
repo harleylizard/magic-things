@@ -20,8 +20,8 @@ class MagicThingsClient : ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(SendBiomesPayload.type) { payload, context ->
             context.client()?.let {
                 it.execute {
-                    val x = payload.x.shr(4)
-                    val z = payload.z.shr(4)
+                    val x = payload.x shr 4
+                    val z = payload.z shr 4
 
                     it.level?.getChunk(x, z, ChunkStatus.FULL, false)?.let { chunk ->
                         chunk.isUnsaved = true

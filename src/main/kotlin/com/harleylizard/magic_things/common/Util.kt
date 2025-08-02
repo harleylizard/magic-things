@@ -19,13 +19,14 @@ import org.joml.Quaternionf
 import org.joml.Vector3f
 
 object Util {
+    val horizontal: Array<Direction> = arrayOf(Direction.SOUTH, Direction.EAST, Direction.NORTH, Direction.WEST)
 
     fun set(level: ServerLevel, biome: ResourceKey<Biome>, blockPos: BlockPos) {
         val x = blockPos.x
         val y = blockPos.y
         val z = blockPos.z
 
-        level.getChunk(x.shr(4), z.shr(4), ChunkStatus.FULL, false)?.let { chunk ->
+        level.getChunk(x shr 4, z shr 4, ChunkStatus.FULL, false)?.let { chunk ->
             val section = chunk.getSection(chunk.getSectionIndex(y))
 
             val biomes = section.biomes.recreate()
