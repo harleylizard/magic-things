@@ -64,11 +64,11 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
     }
 
     override fun randomTick(blockState: BlockState, level: ServerLevel, blockPos: BlockPos, random: RandomSource) {
-        if (Util.nearbyFouledBiome(level, blockPos) && random.nextInt(15) == 0) {
-            for (direction in Direction.entries) {
-                Util.spreadGrowthOutwards(level, blockPos.relative(direction), blockState, random)
-            }
-        }
+        //if (Util.nearbyFouledBiome(level, blockPos) && random.nextInt(15) == 0) {
+        //    for (direction in Direction.entries) {
+        //        Util.spreadGrowthOutwards(level, blockPos.relative(direction), blockState, random)
+        //    }
+        //}
     }
 
     override fun getShape(blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos, collisionContext: CollisionContext): VoxelShape? {
@@ -100,31 +100,31 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
         return i
     }
 
-    fun canGrowOn(level: LevelReader, blockPos: BlockPos, direction: Direction) = Util.solid(level, blockPos.relative(direction.opposite), direction)
+    fun canGrowOn(level: LevelReader, blockPos: BlockPos, direction: Direction) = false
 
     companion object {
         val sides: IntegerProperty = IntegerProperty.create("sides", 0, 256)
 
         fun fromBlockState(blockState: BlockState): Int {
-            if (!blockState.`is`(MagicThingsBlocks.fouledGrowth)) {
-                return 0
-            }
+            //if (!blockState.`is`(MagicThingsBlocks.fouledGrowth)) {
+            //    return 0
+            //}
+//
+            //var i = 0
+            //i = i or (has(blockState, BlockStateProperties.UP) shl 0)
+            //i = i or (has(blockState, BlockStateProperties.DOWN) shl 1)
+//
+            //val j = blockState.getValue(sides)
 
-            var i = 0
-            i = i or (has(blockState, BlockStateProperties.UP) shl 0)
-            i = i or (has(blockState, BlockStateProperties.DOWN) shl 1)
-
-            val j = blockState.getValue(sides)
-
-            return i
+            return 0
         }
 
         fun reverse(i: Int): BlockState {
-            var result = MagicThingsBlocks.fouledGrowth.defaultBlockState()
-            result = result.setValue(BlockStateProperties.UP, ((i shr 0) and 1) > 0)
-            result = result.setValue(BlockStateProperties.DOWN, ((i shr 1) and 1) > 0)
+            //var result = MagicThingsBlocks.fouledGrowth.defaultBlockState()
+            //result = result.setValue(BlockStateProperties.UP, ((i shr 0) and 1) > 0)
+            //result = result.setValue(BlockStateProperties.DOWN, ((i shr 1) and 1) > 0)
 
-            return result
+            return Blocks.DIRT.defaultBlockState()
         }
 
         fun offset(i: Int) = 2 * (i - 2)

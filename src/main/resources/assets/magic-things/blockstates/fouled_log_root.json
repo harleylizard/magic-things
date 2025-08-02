@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "magic-things:block/fouled_log_root",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "magic-things:block/fouled_log_root"
+    },
+    "facing=south": {
+      "model": "magic-things:block/fouled_log_root",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "magic-things:block/fouled_log_root",
+      "y": 270
+    }
+  }
+}

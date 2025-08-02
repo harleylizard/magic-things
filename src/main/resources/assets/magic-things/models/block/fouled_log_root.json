@@ -1,9 +1,9 @@
 {
 	"textures": {
 		"particle": "#side",
-		"side": "magic-things:block/fouled_log_roots_side",
-		"front": "magic-things:block/fouled_log_roots",
-		"top": "magic-things:block/fouled_log_roots_top"
+		"side": "magic-things:block/fouled_log_root_side",
+		"front": "magic-things:block/fouled_log_root",
+		"top": "magic-things:block/fouled_log_root_top"
 	},
 	"elements": [
 		{

@@ -29,7 +29,7 @@ public enum Facing implements StringRepresentable {
     }
 
     public Quaternionf getDegrees() {
-        return Axis.YP.rotationDegrees(ordinal() * 90f);
+        return Axis.YP.rotationDegrees(ordinal() * 90.0f);
     }
 
     public BlockPos relative(BlockPos blockPos) {
