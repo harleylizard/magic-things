@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.chunk.status.ChunkStatus
+import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.joml.Matrix4f
@@ -46,23 +47,27 @@ object Util {
     fun rotate(shape: VoxelShape, quaternionf: Quaternionf): VoxelShape {
         val matrix4f = Matrix4f()
         matrix4f.identity()
-        matrix4f.translate(-0.5f, -0.5f, -0.5f)
-        matrix4f.rotate(quaternionf)
         matrix4f.translate(0.5f, 0.5f, 0.5f)
+        matrix4f.rotate(quaternionf)
+        matrix4f.translate(-0.5f, -0.5f, -0.5f)
 
         var rotated = Shapes.empty()
-        shape.forAllBoxes { minX, minY, minZ, maxX, maxY, maxZ ->
+        for (box in shape.toAabbs().stream().map { aabb ->
             val min = Vector3f()
             val max = Vector3f()
             matrix4f.transformAab(
-                minX.toFloat(), minY.toFloat(), minZ.toFloat(),
-                maxX.toFloat(), maxY.toFloat(), maxZ.toFloat(), min, max)
+                aabb.minX.toFloat(), aabb.minY.toFloat(), aabb.minZ.toFloat(),
+                aabb.maxX.toFloat(), aabb.maxY.toFloat(), aabb.maxZ.toFloat(), min, max)
 
-            rotated = Shapes.or(rotated, Shapes.box(
-                min.x.toDouble(), min.y.toDouble(), min.z.toDouble(), max.x.toDouble(), max.y.toDouble(), max.z.toDouble()))
+            AABB(
+                min.x.toDouble(), min.y.toDouble(), min.z.toDouble(),
+                max.x.toDouble(), max.y.toDouble(), max.z.toDouble())
+
+        }.toList()) {
+            rotated = Shapes.or(rotated, Shapes.create(box))
         }
 
-        return rotated.optimize()
+        return rotated
     }
 
 }
