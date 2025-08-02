@@ -1,11 +1,21 @@
 package com.harleylizard.magic_things.common.block;
 
 import com.harleylizard.magic_things.common.MagicThingsBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class FouledGrowthBlock extends ShapeBlock {
     public static final IntegerProperty XZ_SIDE = IntegerProperty.create("xz_side", 0, 256);
@@ -22,33 +32,57 @@ public final class FouledGrowthBlock extends ShapeBlock {
         builder.add(Y_SIDE);
     }
 
-    // todo:
-    public static int remove(int i, int j) {
+    @Override
+    protected boolean canSurvive(@NotNull BlockState blockState, @NotNull LevelReader level, @NotNull BlockPos blockPos) {
+        return rebuild(blockState, level, blockPos) > 0;
+    }
+
+    @Override
+    protected @NotNull BlockState updateShape(@NotNull BlockState blockState, @NotNull Direction direction, @NotNull BlockState blockState2, @NotNull LevelAccessor level, @NotNull BlockPos blockPos, @NotNull BlockPos blockPos2) {
+        int i;
+        return (i = rebuild(blockState, level, blockPos)) == 0 ? Blocks.AIR.defaultBlockState() : toBlockState(i);
+    }
+
+    public int rebuild(BlockState blockState, LevelReader level, BlockPos blockPos) {
+        var i = fromBlockState(blockState);
+
+        for (var neighbour : Direction.values()) {
+            if (!hasStudyFace(level, blockPos.relative(neighbour.getOpposite()), neighbour)) {
+                i &= ~(3 << (2 * neighbour.ordinal()));
+            }
+
+        }
+
         return i;
     }
 
-    public static int appendTop(int i) {
-        return i | (1 << 2 * 0);
+    @Override
+    public @Nullable BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
+        var level = context.getLevel();
+        var pos = context.getClickedPos();
+
+        var face = context.getClickedFace();
+        switch (face) {
+            case UP, DOWN -> {
+                return defaultBlockState().setValue(Y_SIDE, (hasStudyFace(level, pos.relative(face.getOpposite()), face) ? 1 : 0) << face.ordinal());
+            }
+
+        }
+        return null;
     }
 
-    public static int appendBottom(int i) {
-        return i | (1 << 2 * 1);
+    @Override
+    public VoxelShape shapeFrom(BlockState blockState) {
+        int i = blockState.getValue(Y_SIDE);
+        var shape = Shapes.empty();
+        if ((i & 1) == 1) shape = Shapes.or(shape, Shapes.box(0.0d, 15.0d / 16.0d, 0.0d, 1.0d, 1.0d, 1.0d));
+        if (((i >> 1) & 1) == 1) shape = Shapes.or(shape, Shapes.box(0.0d, 0.0d, 0.0d, 1.0d, 1.0d / 16.0d, 1.0d));
+
+        return shape;
     }
 
-    public static int appendFront(int i, int j) {
-        return i | ((j & 3) << 2 * 2);
-    }
-
-    public static int appendBack(int i, int j) {
-        return i | ((j & 3) << 2 * 3);
-    }
-
-    public static int appendLeft(int i, int j) {
-        return i | ((j & 3) << 2 * 4);
-    }
-
-    public static int appendRight(int i, int j) {
-        return i | ((j & 3) << 2 * 5);
+    public boolean hasStudyFace(BlockGetter getter, BlockPos blockPos, Direction direction) {
+        return getter.getBlockState(blockPos).isFaceSturdy(getter, blockPos, direction);
     }
 
     public static int fromBlockState(BlockState blockState) {
@@ -69,8 +103,8 @@ public final class FouledGrowthBlock extends ShapeBlock {
 
     public static BlockState toBlockState(int i) {
         var j = 0;
-        j |= ((i >> 0) & 1) << 0;
-        j |= ((i >> 1) & 1) << 1;
+        j |= ((i >> 0) & 1);
+        j |= ((i >> 2) & 1) << 1;
 
         var blockState = MagicThingsBlocks.FOULED_GROWTH.defaultBlockState().setValue(Y_SIDE, j);
 

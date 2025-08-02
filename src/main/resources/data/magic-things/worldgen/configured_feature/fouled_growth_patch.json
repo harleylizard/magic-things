@@ -24,7 +24,7 @@
                 "data": {
                   "Name": "magic-things:fouled_growth",
                   "Properties": {
-                    "down": "true"
+                    "y_side": "2"
                   }
                 },
                 "weight": 1

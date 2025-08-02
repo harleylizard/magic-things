@@ -27,9 +27,9 @@ public final class MagicThingsClient implements ClientModInitializer {
                 MagicThingsBlocks.WILTING_GRASS
                 );
 
-        ColorProviderRegistry.BLOCK.register((blockState, blockAndTintGetter, blockPos, i) -> BiomeColors.getAverageGrassColor(requireNonNull(blockAndTintGetter), requireNonNull(blockPos)),
-                MagicThingsBlocks.FOULED_GROWTH,
-                MagicThingsBlocks.WILTING_GRASS);
+        var blockColors = ColorProviderRegistry.BLOCK;
+        blockColors.register((blockState, blockAndTintGetter, blockPos, i) -> BiomeColors.getAverageFoliageColor(requireNonNull(blockAndTintGetter), requireNonNull(blockPos)), MagicThingsBlocks.FOULED_GROWTH);
+        blockColors.register((blockState, blockAndTintGetter, blockPos, i) -> BiomeColors.getAverageGrassColor(requireNonNull(blockAndTintGetter), requireNonNull(blockPos)), MagicThingsBlocks.WILTING_GRASS);
 
         var itemColors = ColorProviderRegistry.ITEM;
         itemColors.register((itemStack, i) -> GrassColor.getDefaultColor(), MagicThingsItems.WILTING_GRASS);

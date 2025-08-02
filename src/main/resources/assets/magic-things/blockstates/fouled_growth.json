@@ -2,160 +2,25 @@
   "multipart": [
     {
       "apply": {
-        "model": "magic-things:block/fouled_growth_bottom",
-        "uvlock": true
-      },
-      "when": {
-        "down": "true"
-      }
-    },
-    {
-      "apply": {
         "model": "magic-things:block/fouled_growth_top",
         "uvlock": true
       },
       "when": {
-        "up": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_bottom_half",
-        "uvlock": true
-      },
-      "when": {
         "OR": [
-          { "sides": 1 }
+          { "y_side": 1 },
+          { "y_side": 3 }
         ]
       }
     },
     {
       "apply": {
-        "model": "magic-things:block/fouled_growth_bottom_half",
-        "y": 180,
+        "model": "magic-things:block/fouled_growth_bottom",
         "uvlock": true
       },
       "when": {
         "OR": [
-          { "sides": 4 }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_bottom_half",
-        "y": 270,
-        "uvlock": true
-      },
-      "when": {
-        "OR": [
-          { "sides": 16 }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_bottom_half",
-        "y": 90,
-        "uvlock": true
-      },
-      "when": {
-        "OR": [
-          { "sides": 64 }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_top_half",
-        "uvlock": true
-      },
-      "when": {
-        "OR": [
-          { "sides": 2 }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_top_half",
-        "y": 180,
-        "uvlock": true
-      },
-      "when": {
-        "OR": [
-          { "sides": 8 }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_top_half",
-        "y": 270,
-        "uvlock": true
-      },
-      "when": {
-        "OR": [
-          { "sides": 32 }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_top_half",
-        "y": 90,
-        "uvlock": true
-      },
-      "when": {
-        "OR": [
-          { "sides": 128 }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_side",
-        "uvlock": true
-      },
-      "when": {
-        "OR": [
-          { "sides": 3 }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_side",
-        "y": 180,
-        "uvlock": true
-      },
-      "when": {
-        "OR": [
-          { "sides": 12 }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_side",
-        "y": 270,
-        "uvlock": true
-      },
-      "when": {
-        "OR": [
-          { "sides": 48 }
-        ]
-      }
-    },
-    {
-      "apply": {
-        "model": "magic-things:block/fouled_growth_side",
-        "y": 90,
-        "uvlock": true
-      },
-      "when": {
-        "OR": [
-          { "sides": 192 }
+          { "y_side": 2 },
+          { "y_side": 3 }
         ]
       }
     }

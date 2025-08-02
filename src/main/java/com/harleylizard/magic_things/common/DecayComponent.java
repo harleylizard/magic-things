@@ -38,7 +38,7 @@ public final class DecayComponent implements ComponentV3, ServerTickingComponent
                             while (iterator.hasNext()) {
                                 var blockPos = iterator.next().offset(new BlockPos(chunkX, i << 4, chunkZ));
 
-                                if (random.nextInt(15) == 0 && level.getBiome(blockPos).is(MagicThingsBiomeTags.FOULED)) {
+                                if (random.nextInt(31) == 0 && level.getBiome(blockPos).is(MagicThingsBiomeTags.FOULED)) {
                                     if (levelChunk.getBlockState(blockPos).is(MagicThingsBlockTags.DECAYS_IN_FOULED_BIOME)) {
                                         level.destroyBlock(blockPos, true);
                                     }

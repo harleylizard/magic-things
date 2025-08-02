@@ -21,7 +21,7 @@ public final class FouledTreeFeature extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(@NotNull FeaturePlaceContext<NoneFeatureConfiguration> context) {
         var random = context.random();
-        var height = 4 + random.nextInt(4);
+        var height = 4 + random.nextInt(3);
 
         var level = context.level();
         var pos = context.origin();

@@ -5,7 +5,6 @@
     "magic-things:fouled_log_root",
     "magic-things:fouled_sapling",
     "magic-things:fouled_growth",
-    "magic-things:spore_pod",
-    "magic-things:spore_pod_stalk"
+    "magic-things:spore_pod"
   ]
 }
