@@ -1,6 +1,7 @@
 package com.harleylizard.magic_things.common;
 
 import com.harleylizard.magic_things.common.block.Facing;
+import com.harleylizard.magic_things.mixin.BiomeManagerAccessor;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
@@ -8,6 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -32,7 +34,12 @@ public final class Util {
             var biomes = section.getBiomes().recreate();
 
             var holder = level.registryAccess().registry(Registries.BIOME).orElseThrow().getHolder(biome).orElseThrow();
-            biomes.set(0, 0, 0, holder);
+
+            var nearest = nearestNeighbour(blockPos, level.getBiomeManager());
+            biomes.set(
+                    nearest.getX(),
+                    nearest.getY(),
+                    nearest.getZ(), holder);
 
             ((BiomeSetter) section).magicThings$set(biomes);
 
@@ -40,6 +47,54 @@ public final class Util {
                 ServerPlayNetworking.send(player, SetBiomesPayload.from(biomes, x, y, z));
             }
         }
+    }
+
+    public static BlockPos nearestNeighbour(BlockPos pos, BiomeManager manager) {
+        var x = pos.getX() - 2;
+        var y = pos.getY() - 2;
+        var z = pos.getZ() - 2;
+        var i = x >> 2;
+        var j = y >> 2;
+        var k = z >> 2;
+
+        var distanceX = (x & 3) / 4.0d;
+        var distanceY = (y & 3) / 4.0d;
+        var distanceZ = (z & 3) / 4.0d;
+
+        var smallest = Double.POSITIVE_INFINITY;
+        var nearest = 0;
+
+        for (var corner = 0; corner <= 7; corner++) {
+            var furthest = BiomeManagerAccessor.magicThings$getFiddledDistance(((BiomeManagerAccessor) manager).magicThings$biomeSeedZoom(),
+                    i + x(corner),
+                    j + y(corner),
+                    k + z(corner),
+                    distanceX - x(corner),
+                    distanceY - y(corner),
+                    distanceZ - z(corner));
+
+            if (smallest > furthest) {
+                nearest = corner;
+                smallest = furthest;
+            }
+        }
+
+        i += x(nearest);
+        j += y(nearest);
+        k += z(nearest);
+        return new BlockPos(i & 3, j & 3, k & 3);
+    }
+
+    private static int x(int i) {
+        return (i & 4) == 0 ? 1 : 0;
+    }
+
+    private static int y(int i) {
+        return (i & 2) == 0 ? 1 : 0;
+    }
+
+    private static int z(int i) {
+        return (i & 1) == 0 ? 1 : 0;
     }
 
     public static VoxelShape rotateShape(VoxelShape shape, Quaternionf rotation) {
