@@ -73,7 +73,13 @@ object Util {
         return rotated
     }
 
-    fun place(level: Level, blockPos: BlockPos, blockState: BlockState, random: RandomSource) {
+    fun spreadGrowthOutwards(level: Level, blockPos: BlockPos, blockState: BlockState, random: RandomSource) {
+        for (direction in Direction.entries) {
+            spreadGrowth(level, blockPos.relative(direction), blockState, random)
+        }
+    }
+
+    fun spreadGrowth(level: Level, blockPos: BlockPos, blockState: BlockState, random: RandomSource) {
         fun set(level: Level, blockPos: BlockPos, new: BlockState) {
             if (new.canSurvive(level, blockPos)) {
                 level.setBlock(blockPos, new, Block.UPDATE_ALL)

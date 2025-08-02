@@ -1,6 +1,5 @@
 package com.harleylizard.magic_things.client
 
-import com.harleylizard.magic_things.common.BiomeSetter
 import com.harleylizard.magic_things.common.MagicThingsBlocks
 import com.harleylizard.magic_things.common.MagicThingsItems
 import com.harleylizard.magic_things.common.payload.SendBiomesPayload
@@ -35,13 +34,20 @@ class MagicThingsClient : ClientModInitializer {
             }
         }
 
-        ColorProviderRegistry.BLOCK.register(BlockColor { blockState, blockAndTintGetter, blockPos, i -> BiomeColors.getAverageGrassColor(blockAndTintGetter, blockPos) }, MagicThingsBlocks.fouledGrowth, MagicThingsBlocks.wiltingGrass)
+        ColorProviderRegistry.BLOCK.register(BlockColor { blockState, blockAndTintGetter, blockPos, i -> BiomeColors.getAverageGrassColor(blockAndTintGetter, blockPos) },
+            MagicThingsBlocks.fouledGrowth,
+            MagicThingsBlocks.sporePodStalk,
+            MagicThingsBlocks.wiltingGrass)
 
         val item = ColorProviderRegistry.ITEM
         item.register(ItemColor { itemStack, i -> GrassColor.getDefaultColor() }, MagicThingsItems.wiltingGrass)
         item.register(ItemColor { itemStack, i -> 0x7D4FAD }, MagicThingsItems.fouledGrowth)
 
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(), MagicThingsBlocks.fouledSapling, MagicThingsBlocks.fouledGrowth, MagicThingsBlocks.wiltingGrass)
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.cutout(),
+            MagicThingsBlocks.fouledSapling,
+            MagicThingsBlocks.fouledGrowth,
+            MagicThingsBlocks.sporePodStalk,
+            MagicThingsBlocks.wiltingGrass)
 
     }
 

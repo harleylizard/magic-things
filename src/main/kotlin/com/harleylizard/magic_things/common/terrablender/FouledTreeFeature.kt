@@ -1,6 +1,5 @@
 package com.harleylizard.magic_things.common.terrablender
 
-import com.harleylizard.magic_things.common.MagicThingsBlockTags
 import com.harleylizard.magic_things.common.MagicThingsBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

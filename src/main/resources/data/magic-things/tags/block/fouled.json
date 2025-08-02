@@ -4,6 +4,8 @@
     "magic-things:fouled_wood",
     "magic-things:fouled_log_roots",
     "magic-things:fouled_sapling",
-    "magic-things:fouled_growth"
+    "magic-things:fouled_growth",
+    "magic-things:spore_pod",
+    "magic-things:spore_pod_stalk"
   ]
 }

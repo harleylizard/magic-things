@@ -1,6 +1,7 @@
 package com.harleylizard.magic_things.common
 
 import com.harleylizard.magic_things.common.MagicThings.Companion.resourceLocation
+import com.harleylizard.magic_things.common.item.SporePodItem
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.BlockItem
@@ -15,6 +16,7 @@ object MagicThingsItems {
     val fouledLogRoots = MagicThingsBlocks.fouledLogRoots.blockItem
     val fouledSapling = MagicThingsBlocks.fouledSapling.blockItem
     val fouledGrowth = MagicThingsBlocks.fouledGrowth.blockItem
+    val sporePod = SporePodItem(Item.Properties())
     val wiltingGrass = MagicThingsBlocks.wiltingGrass.blockItem
 
     fun register() {
@@ -23,6 +25,7 @@ object MagicThingsItems {
         register("fouled_log_roots", fouledLogRoots)
         register("fouled_sapling", fouledSapling)
         register("fouled_growth", fouledGrowth)
+        register("spore_pod", sporePod)
         register("wilting_grass", wiltingGrass)
 
     }

@@ -1,7 +1,5 @@
 package com.harleylizard.magic_things.common.component
 
-import com.harleylizard.magic_things.common.MagicThingsBiomeTags
-import com.harleylizard.magic_things.common.MagicThingsBlockTags
 import com.harleylizard.magic_things.common.Util.to
 import com.harleylizard.magic_things.common.Util.until
 import net.minecraft.core.BlockPos

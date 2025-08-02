@@ -28,12 +28,13 @@ class MagicThings : ModInitializer, TerraBlenderApi, ChunkComponentInitializer {
         MagicThingsFeatures.register()
 
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, "creative_tab".resourceLocation, FabricItemGroup.builder().icon(Items.DIRT::getDefaultInstance).displayItems { itemDisplayParameters, output ->
-            output.accept(MagicThingsBlocks.fouledLog)
-            output.accept(MagicThingsBlocks.fouledWood)
-            output.accept(MagicThingsBlocks.fouledLogRoots)
-            output.accept(MagicThingsBlocks.fouledSapling)
-            output.accept(MagicThingsBlocks.fouledGrowth)
-            output.accept(MagicThingsBlocks.wiltingGrass)
+            output.accept(MagicThingsItems.fouledLog)
+            output.accept(MagicThingsItems.fouledWood)
+            output.accept(MagicThingsItems.fouledLogRoots)
+            output.accept(MagicThingsItems.fouledSapling)
+            output.accept(MagicThingsItems.fouledGrowth)
+            output.accept(MagicThingsItems.sporePod)
+            output.accept(MagicThingsItems.wiltingGrass)
 
         }.title(Component.translatable("magic-things")).build())
 

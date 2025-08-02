@@ -68,7 +68,7 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
     override fun randomTick(blockState: BlockState, level: ServerLevel, blockPos: BlockPos, random: RandomSource) {
         if (Util.nearbyFouledBiome(level, blockPos) && random.nextInt(15) == 0) {
             for (direction in Direction.entries) {
-                Util.place(level, blockPos.relative(direction), blockState, random)
+                Util.spreadGrowthOutwards(level, blockPos.relative(direction), blockState, random)
             }
         }
     }
@@ -82,6 +82,7 @@ class FouledGrowthBlock(properties: Properties) : Block(properties) {
         if (blockState.getValue(BlockStateProperties.DOWN)) {
             shape = Shapes.or(shape, Shapes.box(0.0, 0.0, 0.0, 1.0, 1.0 / 16.0, 1.0))
         }
+
         if (blockState.getValue(BlockStateProperties.UP)) {
             shape = Shapes.or(shape, Shapes.box(0.0, 15.0 / 16, 0.0, 1.0, 1.0, 1.0))
         }
